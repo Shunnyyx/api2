@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .endpoint {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .endpoint pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Documentation</h1>
+
+    <div class="endpoint">
+        <h2>Get Random Cat Image</h2>
+        <p>Endpoint: <code>/images/cat/random</code></p>
+        <a href="/images/cat/random" class="button" target="_blank">Fetch Cat Image</a>
+        <pre>Response: { "url": "https://your-domain/images/cat/random.jpg" }</pre>
+    </div>
+
+    <div class="endpoint">
+        <h2>Get Random Dog Image</h2>
+        <p>Endpoint: <code>/images/dog/random</code></p>
+        <a href="/images/dog/random" class="button" target="_blank">Fetch Dog Image</a>
+        <pre>Response: { "url": "https://your-domain/images/dog/random.jpg" }</pre>
+    </div>
+
+</body>
+</html>

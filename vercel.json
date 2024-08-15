@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/cat", "dest": "/api/cat.js" },
+    { "src": "/api/dog", "dest": "/api/dog.js" }
+  ]
+}
