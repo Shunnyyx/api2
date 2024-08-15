@@ -1,12 +1,21 @@
-import { getRandomImage } from "../utils/utils.js";
-import catImages from "../images/cat.json";
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
 
-export default function handler(req, res) {
-  const randomImage = getRandomImage(catImages);
+const app = express();
 
-  if (!randomImage) {
-    return res.status(404).json({ error: "No se encontraron imágenes de gatos" });
+// Leer el archivo JSON una vez al inicio
+const imagesData = JSON.parse(fs.readFileSync(path.join(__dirname, '../images/cat.json'), 'utf-8'));
+
+// Endpoint para obtener una imagen aleatoria de gatos
+app.get('/cat', (req, res) => {
+  const catImages = imagesData.cats;
+  if (catImages.length === 0) {
+    return res.status(404).json({ error: 'No se encontraron imágenes de gatos' });
   }
 
-  res.status(200).json({ url: randomImage });
-}
+  const randomCatImage = catImages[Math.floor(Math.random() * catImages.length)];
+  res.json({ url: randomCatImage });
+});
+
+module.exports = app;
