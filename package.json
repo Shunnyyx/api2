@@ -1,23 +1,19 @@
 {
-  "name": "nodejs",
+  "name": "api-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Un proyecto de API usando Express en Vercel",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "keep-alive": "node keep-alive.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "echo 'No build step required' && exit 0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@types/node": "^18.0.6",
-    "aoi.js": "^6.8.5",
-    "axios": "^1.7.4",
-    "cors": "^2.8.5",
     "express": "^4.19.2",
-    "fs": "^0.0.2",
+    "fs-extra": "^10.0.0", 
     "path": "^0.12.7"
-  }
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "license": "ISC"
 }
