@@ -1,21 +1,23 @@
-const express = require('express');
-const path = require('path');
 const fs = require('fs');
+const path = require('path');
 
-const app = express();
+module.exports = (req, res) => {
+  // Leer el archivo JSON una vez al inicio
+  const imagesPath = path.join(__dirname, '../images/cat.json');
+  
+  fs.readFile(imagesPath, 'utf-8', (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error al leer el archivo de imágenes' });
+    }
 
-// Leer el archivo JSON una vez al inicio
-const imagesData = JSON.parse(fs.readFileSync(path.join(__dirname, '../images/cat.json'), 'utf-8'));
+    const imagesData = JSON.parse(data);
+    const catImages = imagesData.cats;
 
-// Endpoint para obtener una imagen aleatoria de gatos
-app.get('/', (req, res) => {
-  const catImages = imagesData.cats;
-  if (catImages.length === 0) {
-    return res.status(404).json({ error: 'No se encontraron imágenes de gatos' });
-  }
+    if (!catImages || catImages.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron imágenes de gatos' });
+    }
 
-  const randomCatImage = catImages[Math.floor(Math.random() * catImages.length)];
-  res.json({ url: randomCatImage });
-});
-
-module.exports = app;
+    const randomCatImage = catImages[Math.floor(Math.random() * catImages.length)];
+    res.json({ url: randomCatImage });
+  });
+};
