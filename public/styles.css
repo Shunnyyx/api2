@@ -1,10 +1,10 @@
 /* General */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
-    color: #f0f0f0;
-    background-color: #1f1f1f;
+    color: #fff;
+    background-color: #181a1b; /* Fondo oscuro */
 }
 
 .container {
@@ -15,58 +15,69 @@ body {
 
 /* Header */
 header {
-    background: #282828;
-    color: #f0f0f0;
-    padding: 1rem 0;
-    border-bottom: 2px solid #e91e63; /* Rosa para el borde */
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    background: #282c34;
+    color: #f8f8f2;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #3b4048;
+    text-align: center;
+    position: relative;
+}
+
+header .logo {
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    width: 50px; /* Tamaño del logo */
 }
 
 header h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2.8rem;
+    color: #ff79c6; /* Rosa suave */
 }
 
 header nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 1rem 0 0 0;
+    display: flex;
+    justify-content: center;
 }
 
 header nav ul li {
-    display: inline;
-    margin-right: 1.5rem;
+    margin: 0 1rem;
 }
 
 header nav ul li a {
-    color: #f0f0f0;
+    color: #f8f8f2;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 header nav ul li a:hover {
-    color: #e91e63; /* Rosa para el hover */
+    color: #ff79c6;
 }
 
 /* Sidebar */
 aside {
-    background: #282828;
-    color: #f0f0f0;
-    padding: 1rem;
-    width: 20%;
+    background: #282c34;
+    color: #f8f8f2;
+    padding: 1.5rem 1rem;
+    width: 18%;  /* Ancho ajustado */
     float: left;
-    min-height: 100vh;
-    border-right: 2px solid #e91e63; /* Rosa para el borde */
+    border-right: 1px solid #3b4048;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
 }
 
 aside h2 {
-    font-size: 1.5rem;
-    border-bottom: 2px solid #444;
-    padding-bottom: 0.5rem;
+    font-size: 1.6rem;
+    color: #bd93f9;
     margin-bottom: 1rem;
 }
 
@@ -76,71 +87,99 @@ aside ul {
 }
 
 aside ul li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 aside ul li a {
-    color: #ccc;
+    color: #f8f8f2;
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 aside ul li a:hover {
-    color: #f0f0f0;
-    background: #444;
-    padding: 0.5rem;
-    border-radius: 5px;
+    color: #ff79c6;
+}
+
+aside .dropdown span {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+aside .sub-endpoints {
+    margin-left: 1rem;
+    display: none; /* Escondido por defecto */
+}
+
+aside .dropdown.active .sub-endpoints {
+    display: block; /* Mostrar cuando se active */
+}
+
+aside .arrow {
+    font-size: 0.8rem;
 }
 
 /* Main */
 main {
-    width: 75%;
-    float: right;
-    padding: 2rem;
-    margin-top: 60px; /* Espacio para el header fijo */
-    background: #2e2e2e;
+    margin-left: 20%;
+    padding: 2.5rem 2rem;
+    background: #1c1f24;
     border-radius: 10px;
+    color: #f8f8f2;
 }
 
-main section {
+.section {
     margin-bottom: 3rem;
 }
 
 h2 {
     font-size: 2rem;
-    border-bottom: 2px solid #e91e63; /* Rosa para el borde del título */
+    color: #ff79c6;
+    border-bottom: 2px solid #ff79c6;
     padding-bottom: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .endpoint {
-    background: #333;
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
+    background: #3b4048;
+    padding: 1.5rem;
+    border-left: 4px solid #ff79c6;
+    margin-bottom: 2rem;
+    border-radius: 8px;
 }
 
 .endpoint h3 {
-    margin-top: 0;
+    font-size: 1.5rem;
+    color: #bd93f9;
+    margin-bottom: 1rem;
+}
+
+.endpoint img {
+    width: 100%;
+    max-width: 200px;
+    margin: 1rem 0;
+    border-radius: 8px;
 }
 
 pre {
-    background: #1e1e1e;
+    background-color: #282c34;
     padding: 1rem;
-    border-radius: 5px;
+    border-radius: 8px;
+    color: #f8f8f2;
     overflow-x: auto;
-    border: 1px solid #e91e63; /* Rosa para el borde del código */
 }
 
 code {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: monospace;
 }
 
-/* Footer */
 footer {
-    background: #282828;
-    color: #f0f0f0;
+    background: #282c34;
+    color: #f8f8f2;
     text-align: center;
-    padding: 1rem 0;
-    clear: both;
-    border-top: 2px solid #e91e63; /* Rosa para el borde superior del pie de página */
+    padding: 1.5rem 0;
+    border-top: 1px solid #3b4048;
+    margin-top: 3rem;
 }
