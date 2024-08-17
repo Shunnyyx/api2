@@ -4,106 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentación API</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="icon" href="public/icon.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+</head>
+<body>
     <header>
         <div class="container">
-            <img src="logo.png" alt="Logo" class="logo">
-            <h1>Documentación API</h1>
-            <nav>
+            <div class="logo-container">
+                <img src="logo.png" alt="Logo" class="logo">
+                <h1>API Docs</h1>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <ul>
-                    <li><a href="#intro">Introducción</a></li>
-                    <li><a href="#endpoints">Endpoints</a></li>
-                    <li><a href="#quickstart">Guía Rápida</a></li>
-                    <li><a href="#auth">Autenticación</a></li>
-                    <li><a href="#support">Soporte</a></li>
+                    <li><a href="#intro"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#auth"><i class="fas fa-key"></i> Autenticación</a></li>
+                    <li><a href="#endpoints"><i class="fas fa-code"></i> Endpoints</a></li>
+                    <li><a href="#examples"><i class="fas fa-laptop-code"></i> Ejemplos</a></li>
+                    <li><button id="theme-toggle"><i class="fas fa-moon"></i> Tema Oscuro</button></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
+    <div class="main-container">
         <aside>
-            <div class="container">
-                <h2>Contenido</h2>
+            <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="#intro">Introducción</a></li>
-                    <li><a href="#endpoints">Endpoints</a></li>
-                    <li class="dropdown">
-                        <span>Imágenes <span class="arrow">▼</span></span>
-                        <ul class="sub-endpoints">
-                            <li><a href="#cat">Cat</a></li>
-                            <li><a href="#dog">Dog</a></li>
+                    <li><a href="#intro"><i class="fas fa-info-circle"></i> Introducción</a></li>
+                    <li><a href="#auth"><i class="fas fa-lock"></i> Autenticación</a></li>
+                    <li class="has-submenu">
+                        <a href="#endpoints"><i class="fas fa-code-branch"></i> Endpoints <i class="fas fa-chevron-down"></i></a>
+                        <ul class="submenu">
+                            <li><a href="#cat"><i class="fas fa-cat"></i> GET /cat</a></li>
+                            <li><a href="#dog"><i class="fas fa-dog"></i> GET /dog</a></li>
                         </ul>
                     </li>
-                    <li><a href="#quickstart">Guía Rápida</a></li>
-                    <li><a href="#auth">Autenticación</a></li>
-                    <li><a href="#support">Soporte</a></li>
+                    <li><a href="#examples"><i class="fas fa-laptop-code"></i> Ejemplos de Uso</a></li>
+                    <li><a href="#support"><i class="fas fa-life-ring"></i> Soporte</a></li>
                 </ul>
-            </div>
+            </nav>
         </aside>
 
-        <section id="content">
-            <div id="intro" class="section">
+        <main>
+            <section id="intro">
                 <h2>Introducción</h2>
-                <p>Bienvenido a la documentación de la API. Aquí podrás encontrar información sobre cómo utilizar la API.</p>
-            </div>
+                <p>Bienvenido a la documentación de nuestra API. Aquí encontrarás toda la información necesaria para integrar nuestros servicios en tu aplicación.</p>
+            </section>
 
-            <div id="auth" class="section">
+            <section id="auth">
                 <h2>Autenticación</h2>
-                <p>Para acceder a la API, necesitas autenticarte usando una clave de API. Aquí te explicamos cómo obtenerla.</p>
-            </div>
+                <p>Nuestra API utiliza autenticación basada en tokens. Sigue estos pasos para obtener y utilizar tu token de acceso.</p>
+                <ol>
+                    <li>Regístrate para obtener una cuenta de desarrollador.</li>
+                    <li>Genera tu token de API en el panel de control.</li>
+                    <li>Incluye el token en el encabezado de tus solicitudes.</li>
+                </ol>
+            </section>
 
-            <div id="endpoints" class="section">
+            <section id="endpoints">
                 <h2>Endpoints</h2>
 
                 <div id="cat" class="endpoint">
                     <h3>GET /api/v1/cat</h3>
-                    <p><strong>Descripción:</strong> Obtiene información sobre gatos.</p>
-                    <p><strong>Parámetros:</strong> Ninguno</p>
-                    <img src="cat.png" alt="Imagen de gato" class="endpoint-image">
-                    <p><strong>Respuesta:</strong></p>
-                    <pre><code class="language-json">{
-  "data": "info sobre gatos"
+                    <p>Obtiene información sobre gatos.</p>
+                    <h4>Parámetros</h4>
+                    <p>Esta petición no requiere parámetros.</p>
+                    <h4>Respuesta</h4>
+                    <pre><code>{
+  "id": "c-001",
+  "name": "Whiskers",
+  "breed": "Siamese",
+  "age": 3
 }</code></pre>
                 </div>
 
                 <div id="dog" class="endpoint">
                     <h3>GET /api/v1/dog</h3>
-                    <p><strong>Descripción:</strong> Obtiene información sobre perros.</p>
-                    <p><strong>Parámetros:</strong> Ninguno</p>
-                    <img src="dog.png" alt="Imagen de perro" class="endpoint-image">
-                    <p><strong>Respuesta:</strong></p>
-                    <pre><code class="language-json">{
-  "data": "info sobre perros"
+                    <p>Obtiene información sobre perros.</p>
+                    <h4>Parámetros</h4>
+                    <p>Esta petición no requiere parámetros.</p>
+                    <h4>Respuesta</h4>
+                    <pre><code>{
+  "id": "d-001",
+  "name": "Buddy",
+  "breed": "Labrador",
+  "age": 5
 }</code></pre>
                 </div>
-            </div>
+            </section>
 
-            <div id="quickstart" class="section">
-                <h2>Guía Rápida</h2>
-                <p>Para empezar rápidamente, aquí tienes algunos ejemplos de cómo hacer solicitudes a la API.</p>
-                <pre><code class="language-javascript">fetch('/api/v1/resource')
-  .then(response => response.json())
-  .then(data => console.log(data));</code></pre>
-            </div>
+            <section id="examples">
+                <h2>Ejemplos de Uso</h2>
+                <p>Aquí tienes un ejemplo de cómo hacer una solicitud a nuestra API usando JavaScript:</p>
+                <pre><code>fetch('https://api.ejemplo.com/v1/cat', {
+  headers: {
+    'Authorization': 'Bearer TU_TOKEN_AQUI'
+  }
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error('Error:', error));</code></pre>
+            </section>
 
-            <div id="support" class="section">
+            <section id="support">
                 <h2>Soporte</h2>
-                <p>Si necesitas ayuda, puedes contactarnos en <a href="mailto:support@miapi.com">support@miapi.com</a> o unirte a nuestro servidor de Discord.</p>
-            </div>
-        </section>
-    </main>
+                <p>Si necesitas ayuda, no dudes en contactarnos:</p>
+                <ul>
+                    <li>Email: <a href="mailto:support@ejemplo.com">support@ejemplo.com</a></li>
+                    <li>Twitter: <a href="https://twitter.com/ejemploapi">@ejemploapi</a></li>
+                </ul>
+            </section>
+        </main>
+    </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 Aiko Api. Creado con ❤️ por Shunny.</p>
+            <p>&copy; 2024 2024 Aiko API. Creado con ❤️ por Shunny.</p>
         </div>
     </footer>
-
     <script src="scripts.js"></script>
 </body>
 </html>
