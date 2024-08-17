@@ -55,63 +55,35 @@
         <main>
             <section id="intro">
                 <h2>Introducción</h2>
-                <p>Bienvenido a la documentación de nuestra API. Aquí encontrarás toda la información necesaria para integrar nuestros servicios en tu aplicación.</p>
-            </section>
-
-            <section id="auth">
-                <h2>Autenticación</h2>
-                <p>Nuestra API utiliza autenticación basada en tokens. Sigue estos pasos para obtener y utilizar tu token de acceso.</p>
-                <ol>
-                    <li>Regístrate para obtener una cuenta de desarrollador.</li>
-                    <li>Genera tu token de API en el panel de control.</li>
-                    <li>Incluye el token en el encabezado de tus solicitudes.</li>
-                </ol>
+                <p>Bienvenido a la documentación de Aiko API. Aquí encontrarás toda la información necesaria para integrar nuestros servicios en tu aplicación.</p>
             </section>
 
             <section id="endpoints">
                 <h2>Endpoints</h2>
 
                 <div id="cat" class="endpoint">
-                    <h3>GET /api/v1/cat</h3>
-                    <p>Obtiene información sobre gatos.</p>
+                    <h3>GET /api/cat</h3>
+                    <p>Obtiene imagenes aleatorias de gatos.</p>
                     <h4>Parámetros</h4>
                     <p>Esta petición no requiere parámetros.</p>
                     <h4>Respuesta</h4>
-                    <pre><code>{
-  "id": "c-001",
-  "name": "Whiskers",
-  "breed": "Siamese",
-  "age": 3
-}</code></pre>
+                    <pre><code>{"url":"https://cdn.aiko.top/cat/cat01.jpg"}</code></pre>
                 </div>
 
                 <div id="dog" class="endpoint">
-                    <h3>GET /api/v1/dog</h3>
-                    <p>Obtiene información sobre perros.</p>
+                    <h3>GET /api/dog</h3>
+                    <p>Obtiene imagenes aleatorias de perros.</p>
                     <h4>Parámetros</h4>
                     <p>Esta petición no requiere parámetros.</p>
                     <h4>Respuesta</h4>
-                    <pre><code>{
-  "id": "d-001",
-  "name": "Buddy",
-  "breed": "Labrador",
-  "age": 5
-}</code></pre>
+                    <pre><code>{"url":"https://cdn.aiko.top/dog/dog01.jpg"}</code></pre>
                 </div>
             </section>
 
             <section id="examples">
                 <h2>Ejemplos de Uso</h2>
-                <p>Aquí tienes un ejemplo de cómo hacer una solicitud a nuestra API usando JavaScript:</p>
-                <pre><code>fetch('https://api.ejemplo.com/v1/cat', {
-  headers: {
-    'Authorization': 'Bearer TU_TOKEN_AQUI'
-  }
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error('Error:', error));</code></pre>
-            </section>
+                <p>Pronto.</p>
+
 
             <section id="support">
                 <h2>Soporte</h2>
