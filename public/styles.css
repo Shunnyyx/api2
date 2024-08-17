@@ -6,6 +6,9 @@
     --border-color: #e0e0e0;
     --code-bg: #f5f5f5;
     --menu-hover: #f0f0f0;
+    --menu-border: #dcdcdc;
+    --support-bg: #3498db;
+    --support-text: #ffffff;
 }
 
 body.dark-theme {
@@ -16,56 +19,9 @@ body.dark-theme {
     --border-color: #444444;
     --code-bg: #2a2a2a;
     --menu-hover: #2a2a2a;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    margin: 0;
-    padding: 0;
-}
-
-/* ... (rest of the original CSS remains unchanged) ... */
-
-/* Add these new styles for the theme toggle button */
-#theme-toggle {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    border-radius: 15px;
-    transition: background-color 0.3s ease;
-}
-
-#theme-toggle:hover {
-    background-color: var(--menu-hover);
-}
-
-#theme-toggle i {
-    margin-right: 5px;
-}
-
-/* Make sure the toggle button looks good on mobile */
-@media (max-width: 768px) {
-    #theme-toggle {
-        margin-top: 10px;
-    }
-}
-
-:root {
-    --bg-color: #ffffff;
-    --text-color: #333333;
-    --primary-color: #3498db;
-    --secondary-color: #e74c3c;
-    --border-color: #e0e0e0;
-    --code-bg: #f5f5f5;
-    --menu-hover: #f0f0f0;
+    --menu-border: #333333;
+    --support-bg: #4fa3d1;
+    --support-text: #ffffff;
 }
 
 body {
@@ -90,6 +46,7 @@ header {
     top: 0;
     z-index: 1000;
     padding: 10px 0;
+    border-bottom: 1px solid var(--menu-border);
 }
 
 .logo-container {
@@ -98,8 +55,7 @@ header {
 }
 
 .logo {
-    width: 40px;
-    margin-right: 10px;
+    height: 45px; /* Tamaño ajustado del logo */
 }
 
 h1 {
@@ -120,6 +76,10 @@ h1 {
     margin-left: 20px;
 }
 
+.main-nav ul li:last-child {
+    margin-right: 0;
+}
+
 .main-nav ul li a {
     text-decoration: none;
     color: var(--text-color);
@@ -127,10 +87,13 @@ h1 {
     transition: color 0.3s ease;
     display: flex;
     align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent; /* Línea del menú superior */
 }
 
 .main-nav ul li a:hover {
     color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color); /* Resalta la línea al pasar por encima */
 }
 
 .main-nav ul li a i {
@@ -154,12 +117,15 @@ h1 {
 aside {
     width: 250px;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-right: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    border-right: 1px solid var(--menu-border);
     height: calc(100vh - 60px);
     position: sticky;
     top: 60px;
     overflow-y: auto;
+    border-bottom-left-radius: 0;
+    border-top: 1px solid var(--menu-border); /* Línea que conecta con el menú superior */
+    border-bottom: 1px solid var(--menu-border); /* Línea que conecta con el footer */
 }
 
 .sidebar-nav ul {
@@ -223,8 +189,81 @@ main {
     padding: 20px;
 }
 
-/* Resto del CSS permanece igual */
+pre {
+    background-color: var(--code-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--text-color);
+    overflow-x: auto;
+    border: 1px solid var(--menu-border); /* Borde del área de código */
+}
 
+code {
+    font-family: monospace;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+}
+
+#theme-toggle:hover {
+    background-color: var(--menu-hover);
+}
+
+#theme-toggle i {
+    margin-right: 5px;
+}
+
+/* Footer centrado */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--bg-color);
+    border-top: 1px solid var(--menu-border);
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+/* Conexión de la línea del footer con el menú lateral */
+footer {
+    border-top: 1px solid var(--menu-border); /* Línea en el footer */
+}
+
+/* Estilo del enlace de soporte */
+.support-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--support-bg);
+    color: var(--support-text);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.support-link:hover {
+    background-color: var(--primary-color);
+}
+
+/* Endpoints y Títulos */
+h2, h3 {
+    font-weight: 600;
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--menu-border); /* Línea debajo de los títulos */
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
     .main-container {
         flex-direction: column;
@@ -235,7 +274,9 @@ main {
         height: auto;
         position: static;
         border-right: none;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--menu-border);
+        border-top: none; /* Se elimina la línea de conexión en móviles */
+        border-bottom: 1px solid var(--menu-border);
     }
 
     .main-nav ul {
@@ -267,63 +308,11 @@ main {
 
     header .container {
         display: flex;
-        justify-content: space-between;:root {
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --primary-color: #3498db;
-            --secondary-color: #e74c3c;
-            --border-color: #e0e0e0;
-            --code-bg: #f5f5f5;
-            --menu-hover: #f0f0f0;
-        }
-        
-        body.dark-theme {
-            --bg-color: #1a1a1a;
-            --text-color: #f0f0f0;
-            --primary-color: #4fa3d1;
-            --secondary-color: #e57373;
-            --border-color: #444444;
-            --code-bg: #2a2a2a;
-            --menu-hover: #2a2a2a;
-        }
-        
-        /* Rest of the CSS remains the same */
-        
-        #theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            cursor: pointer;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        #theme-toggle:hover {
-            color: var(--primary-color);
-        }
-        
-        .go-to-endpoint {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: #ffffff;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 15px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .go-to-endpoint:hover {
-            background-color: #2980b9;
-        }
-        
-        /* Add this at the end of your CSS file */
-        @media (max-width: 768px) {
-            #theme-toggle {
-                margin-top: 10px;
-            }
-        }
+        justify-content: space-between;
         align-items: center;
+    }
+
+    #theme-toggle {
+        margin-top: 10px;
     }
 }

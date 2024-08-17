@@ -17,20 +17,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        updateThemeToggle(true);
+    }
+
     // Theme toggle functionality
     themeToggle.addEventListener('click', function() {
         document.body.classList.toggle('dark-theme');
-        const icon = this.querySelector('i');
-        if (document.body.classList.contains('dark-theme')) {
+        const isDarkTheme = document.body.classList.contains('dark-theme');
+        localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+        updateThemeToggle(isDarkTheme);
+    });
+
+    function updateThemeToggle(isDarkTheme) {
+        const icon = themeToggle.querySelector('i');
+        if (isDarkTheme) {
             icon.classList.remove('fa-moon');
             icon.classList.add('fa-sun');
-            this.textContent = ' Tema Claro';
-            this.prepend(icon);
+            themeToggle.textContent = ' Tema Claro';
         } else {
             icon.classList.remove('fa-sun');
             icon.classList.add('fa-moon');
-            this.textContent = ' Tema Oscuro';
-            this.prepend(icon);
+            themeToggle.textContent = ' Tema Oscuro';
         }
-    });
+        themeToggle.prepend(icon);
+    }
 });
