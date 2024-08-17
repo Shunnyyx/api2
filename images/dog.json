@@ -1,6 +1,21 @@
 {
   "dogs": [
-    "https://example.com/path-to-your-dog-image1.jpg",
-    "https://example.com/path-to-your-dog-image2.jpg"
+    "https://api.aiko.top/api/dog/dog01.jpg",
+    "https://api.aiko.top/api/dog/dog02.jpg",
+    "https://api.aiko.top/api/dog/dog03.jpg",
+    "https://api.aiko.top/api/dog/dog04.jpg",
+    "https://api.aiko.top/api/dog/dog05.jpg",
+    "https://api.aiko.top/api/dog/dog06.jpg",
+    "https://api.aiko.top/api/dog/dog07.jpg",
+    "https://api.aiko.top/api/dog/dog08.jpg",
+    "https://api.aiko.top/api/dog/dog09.jpg",
+    "https://api.aiko.top/api/dog/dog10.jpg",
+    "https://api.aiko.top/api/dog/dog11.jpg",
+    "https://api.aiko.top/api/dog/dog12.jpg",
+    "https://api.aiko.top/api/dog/dog13.jpg",
+    "https://api.aiko.top/api/dog/dog14.jpg",
+    "https://api.aiko.top/api/dog/dog15.jpg",
+    "https://api.aiko.top/api/dog/dog16.jpg",
+    "https://api.aiko.top/api/dog/dog17.jpg"
   ]
 }

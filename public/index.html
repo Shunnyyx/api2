@@ -1,16 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image API</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación API</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Welcome to the Image API</h1>
-  <p>Use the API endpoints to get random images:</p>
-  <ul>
-    <li><a href="/api/cat">Get Random Cat Image</a></li>
-    <li><a href="/api/dog">Get Random Dog Image</a></li>
-  </ul>
+    <header>
+        <div class="container">
+            <h1>Documentación API</h1>
+            <nav>
+                <ul>
+                    <li><a href="#intro">Introducción</a></li>
+                    <li><a href="#endpoints">Endpoints</a></li>
+                    <li><a href="#quickstart">Guía Rápida</a></li>
+                    <li><a href="#auth">Autenticación</a></li>
+                    <li><a href="#support">Soporte</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <aside>
+        <div class="container">
+            <h2>Contenido</h2>
+            <ul>
+                <li><a href="#intro">Introducción</a></li>
+                <li><a href="#endpoints">Endpoints</a></li>
+                <li><a href="#quickstart">Guía Rápida</a></li>
+                <li><a href="#auth">Autenticación</a></li>
+                <li><a href="#support">Soporte</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main>
+        <section id="intro">
+            <h2>Introducción</h2>
+            <p>Bienvenido a la documentación de la API. Aquí podrás encontrar información sobre cómo utilizar la API.</p>
+        </section>
+
+        <section id="auth">
+            <h2>Autenticación</h2>
+            <p>Para acceder a la API, necesitas autenticarte usando una clave de API. Aquí te explicamos cómo obtenerla.</p>
+        </section>
+
+        <section id="endpoints">
+            <h2>Endpoints</h2>
+            <div class="endpoint">
+                <h3>GET /api/v1/resource</h3>
+                <p><strong>Descripción:</strong> Obtiene información sobre el recurso.</p>
+                <p><strong>Parámetros:</strong> Ninguno</p>
+                <p><strong>Respuesta:</strong></p>
+                <pre><code class="language-json">{
+  "data": "example"
+}</code></pre>
+            </div>
+            <!-- Más endpoints aquí -->
+        </section>
+
+        <section id="quickstart">
+            <h2>Guía Rápida</h2>
+            <p>Para empezar rápidamente, aquí tienes algunos ejemplos de cómo hacer solicitudes a la API.</p>
+            <pre><code class="language-javascript">fetch('/api/v1/resource')
+  .then(response => response.json())
+  .then(data => console.log(data));</code></pre>
+        </section>
+
+        <section id="support">
+            <h2>Soporte</h2>
+            <p>Si necesitas ayuda, puedes contactarnos en <a href="mailto:support@miapi.com">support@miapi.com</a> o unirte a nuestro servidor de Discord.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Mi API. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>

@@ -1,0 +1,146 @@
+/* General */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #f0f0f0;
+    background-color: #1f1f1f;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    background: #282828;
+    color: #f0f0f0;
+    padding: 1rem 0;
+    border-bottom: 2px solid #e91e63; /* Rosa para el borde */
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 1.5rem;
+}
+
+header nav ul li a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+header nav ul li a:hover {
+    color: #e91e63; /* Rosa para el hover */
+}
+
+/* Sidebar */
+aside {
+    background: #282828;
+    color: #f0f0f0;
+    padding: 1rem;
+    width: 20%;
+    float: left;
+    min-height: 100vh;
+    border-right: 2px solid #e91e63; /* Rosa para el borde */
+}
+
+aside h2 {
+    font-size: 1.5rem;
+    border-bottom: 2px solid #444;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li {
+    margin-bottom: 0.5rem;
+}
+
+aside ul li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+aside ul li a:hover {
+    color: #f0f0f0;
+    background: #444;
+    padding: 0.5rem;
+    border-radius: 5px;
+}
+
+/* Main */
+main {
+    width: 75%;
+    float: right;
+    padding: 2rem;
+    margin-top: 60px; /* Espacio para el header fijo */
+    background: #2e2e2e;
+    border-radius: 10px;
+}
+
+main section {
+    margin-bottom: 3rem;
+}
+
+h2 {
+    font-size: 2rem;
+    border-bottom: 2px solid #e91e63; /* Rosa para el borde del título */
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.endpoint {
+    background: #333;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.endpoint h3 {
+    margin-top: 0;
+}
+
+pre {
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    border: 1px solid #e91e63; /* Rosa para el borde del código */
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Footer */
+footer {
+    background: #282828;
+    color: #f0f0f0;
+    text-align: center;
+    padding: 1rem 0;
+    clear: both;
+    border-top: 2px solid #e91e63; /* Rosa para el borde superior del pie de página */
+}
