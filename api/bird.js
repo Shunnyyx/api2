@@ -14,10 +14,10 @@ module.exports = (req, res) => {
     const birdImages = imagesData.birds;
 
     if (!birdImages || birdImages.length === 0) {
-      return res.status(404).json({ error: 'No se encontraron imágenes de gatos' });
+      return res.status(404).json({ error: 'No se encontraron imágenes de pájaros' });
     }
 
     const randomBirdImage = birdImages[Math.floor(Math.random() * birdImages.length)];
-    res.json({ url: randomCatImage });
+    res.json({ url: randomBirdImage });
   });
 };
