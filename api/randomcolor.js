@@ -8,11 +8,17 @@ const generateColorImage = (color) => {
   ctx.fillStyle = color;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+  // Añadir texto con el valor del color
+  ctx.font = '20px Arial';
+  ctx.fillStyle = '#000000'; // Color del texto
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(color, canvas.width / 2, canvas.height / 2);
+
   return canvas.toBuffer('image/png');
 };
 
 module.exports = (req, res) => {
-  // Obtener el color de la consulta (query) o usar un color predeterminado
   const color = req.query.color || '#ffffff'; // Color blanco por defecto
 
   try {
