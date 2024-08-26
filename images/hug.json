@@ -1,87 +1,84 @@
 {
-    "hug": [
-      {
-        "name": "K-on",
-        "gif": "https://cdn.aiko.top/hug/hug001.gif"
-      },
-      {
-        "name": "K-on",
-        "gif": "https://cdn.aiko.top/hug/hug002.gif"
-      },
-      {
-        "name": "Noucome",
-        "gif": "https://cdn.aiko.top/hug/hug003.gif"
-      },
-      {
-        "name": "Kokoro Connect",
-        "gif": "https://cdn.aiko.top/hug/hug004.gif"
-      },
-      {
-        "name": "Elfen Lied",
-        "gif": "https://cdn.aiko.top/hug/hug005.gif"
-      },
-      {
-        "name": "Goldem Time",
-        "gif": "https://cdn.aiko.top/hug/hug006.gif"
-      },
-      {
-        "name": "Madoka Magica",
-        "gif": "https://cdn.aiko.top/hug/hug007gif"
-      },
-      {
-        "name": "K-on",
-        "gif": "https://cdn.aiko.top/hug/hug008.gif"
-      },
-      {
-        "name": "YuruYuri",
-        "gif": "https://cdn.aiko.top/hug/hug009.gif"
-      },
-      {
-        "name": "Himouto! Umaru-chan",
-        "gif": "https://cdn.aiko.top/hug/hug010.gif"
-      },
-      {
-        "name": "Urara Meirochō",
-        "gif": "https://cdn.aiko.top/hug/hug011.gif"
-      },
-      {
-        "name": "K-on",
-        "gif": "https://cdn.aiko.top/hug/hug012.gif"
-      },
-      {
-        "name": "Watashi Ni Tenshi Ga Maiorita!",
-        "gif": "https://cdn.aiko.top/hug/hug013.gif"
-      },
-      {
-        "name": "Jibaku Shōnen Hanako-kun",
-        "gif": "https://cdn.aiko.top/hug/hug014.gif"
-      },
-      {
-        "name": "Urara Meirochō",
-        "gif": "https://cdn.aiko.top/hug/hug015.gif"
-      },
-      {
-        "name": "Kishuku Gakkou no Juliet",
-        "gif": "https://cdn.aiko.top/hug/hug016.gif"
-      },
-      {
-        "name": "Date a Live",
-        "gif": "https://cdn.aiko.top/hug/hug017.gif"
-      },
-      {
-        "name": "Karneval",
-        "gif": "https://cdn.aiko.top/hug/hug018.gif"
-      },
-      {
-        "name": "Kakegurui",
-        "gif": "https://cdn.aiko.top/hug/hug019.gif"
-      },
-      {
-        "name": "Sōshi Miketsukami",
-        "gif": "https://cdn.aiko.top/hug/hug020.gif"
-      }
-
-    ]
-
-  }
-  
+  "hug": [
+    {
+      "name": "K-on",
+      "gif": "https://cdn.aiko.top/hug/hug001.gif"
+    },
+    {
+      "name": "K-on",
+      "gif": "https://cdn.aiko.top/hug/hug002.gif"
+    },
+    {
+      "name": "Noucome",
+      "gif": "https://cdn.aiko.top/hug/hug003.gif"
+    },
+    {
+      "name": "Kokoro Connect",
+      "gif": "https://cdn.aiko.top/hug/hug004.gif"
+    },
+    {
+      "name": "Elfen Lied",
+      "gif": "https://cdn.aiko.top/hug/hug005.gif"
+    },
+    {
+      "name": "Golden Time",
+      "gif": "https://cdn.aiko.top/hug/hug006.gif"
+    },
+    {
+      "name": "Madoka Magica",
+      "gif": "https://cdn.aiko.top/hug/hug007.gif"
+    },
+    {
+      "name": "K-on",
+      "gif": "https://cdn.aiko.top/hug/hug008.gif"
+    },
+    {
+      "name": "YuruYuri",
+      "gif": "https://cdn.aiko.top/hug/hug009.gif"
+    },
+    {
+      "name": "Himouto! Umaru-chan",
+      "gif": "https://cdn.aiko.top/hug/hug010.gif"
+    },
+    {
+      "name": "Urara Meirochō",
+      "gif": "https://cdn.aiko.top/hug/hug011.gif"
+    },
+    {
+      "name": "K-on",
+      "gif": "https://cdn.aiko.top/hug/hug012.gif"
+    },
+    {
+      "name": "Watashi Ni Tenshi Ga Maiorita!",
+      "gif": "https://cdn.aiko.top/hug/hug013.gif"
+    },
+    {
+      "name": "Jibaku Shōnen Hanako-kun",
+      "gif": "https://cdn.aiko.top/hug/hug014.gif"
+    },
+    {
+      "name": "Urara Meirochō",
+      "gif": "https://cdn.aiko.top/hug/hug015.gif"
+    },
+    {
+      "name": "Kishuku Gakkou no Juliet",
+      "gif": "https://cdn.aiko.top/hug/hug016.gif"
+    },
+    {
+      "name": "Date a Live",
+      "gif": "https://cdn.aiko.top/hug/hug017.gif"
+    },
+    {
+      "name": "Karneval",
+      "gif": "https://cdn.aiko.top/hug/hug018.gif"
+    },
+    {
+      "name": "Kakegurui",
+      "gif": "https://cdn.aiko.top/hug/hug019.gif"
+    },
+    {
+      "name": "Inu x Boku SS",
+      "gif": "https://cdn.aiko.top/hug/hug020.gif"
+    }
+  ]
+}
