@@ -21,11 +21,16 @@ const generateColorImage = (color) => {
 module.exports = (req, res) => {
   const color = req.query.color || '#ffffff'; // Color blanco por defecto
 
+  if (!/^#[0-9A-Fa-f]{6}$/.test(color)) {
+    return res.status(400).json({ error: 'Color inválido. Usa un código hexadecimal como #RRGGBB.' });
+  }
+
   try {
     const imageBuffer = generateColorImage(color);
     res.set('Content-Type', 'image/png');
     res.send(imageBuffer);
   } catch (error) {
+    console.error('Error al generar la imagen:', error); // Agregar esto para ver el error en los registros
     res.status(500).json({ error: 'Error al generar la imagen del color' });
   }
 };
