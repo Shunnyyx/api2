@@ -3,101 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aiko API</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="icon" href="public/icon.png" type="image/png">
+    <title>Endpoints de la API</title>
+    <link rel="icon" href="icon.png" type="image/png">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="logo-container">
-                <img src="logo.png" alt="Logo" class="logo">
-            </div>
-            <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <ul>
-                    <li><a href="#intro"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="#endpoints"><i class="fas fa-code"></i> Endpoints</a></li>
-                    <li><a href="#examples"><i class="fas fa-laptop-code"></i> Ejemplos</a></li>
-                    <li><button id="theme-toggle"><i class="fas fa-moon"></i> Tema Oscuro</button></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <div class="main-container">
-        <aside>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="#intro"><i class="fas fa-info-circle"></i> Introducción</a></li>
-                    <li><a href="#auth"><i class="fas fa-lock"></i> Autenticación</a></li>
-                    <li class="has-submenu">
-                        <a href="#endpoints"><i class="fas fa-code-branch"></i> Endpoints <i class="fas fa-chevron-down"></i></a>
-                        <ul class="submenu">
-                            <li><a href="#cat"><i class="fas fa-cat"></i> GET /cat</a></li>
-                            <li><a href="#dog"><i class="fas fa-dog"></i> GET /dog</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#examples"><i class="fas fa-laptop-code"></i> Ejemplos de Uso</a></li>
-                    <li><a href="#support"><i class="fas fa-life-ring"></i> Soporte</a></li>
-                </ul>
-            </nav>
-        </aside>
-
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="Logo" class="logo">
+        </header>
         <main>
-            <section id="intro">
-                <h2>Introducción</h2>
-                <p>Bienvenido a la documentación de Aiko API. Aquí encontrarás toda la información necesaria para integrar nuestros servicios en tu aplicación.</p>
-            </section>
-
-            <section id="endpoints">
-                <h2>Endpoints</h2>
-
-                <div id="cat" class="endpoint">
-                    <h3>GET /api/cat</h3>
-                    <p>Obtiene imagenes aleatorias de gatos.</p>
-                    <h4>Parámetros</h4>
-                    <p>Esta petición no requiere parámetros.</p>
-                    <h4>Respuesta</h4>
-                    <pre><code>{"url":"https://cdn.aiko.top/cat/cat01.jpg"}</code></pre>
+            <section class="endpoints">
+                <h2>Animales</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-icon">🐱</div>
+                        <h3>API de Gatos</h3>
+                        <p>Obtén datos sobre gatos.</p>
+                        <a href="https://api.aiko.top/api/cat" target="_blank">Obtener</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🐶</div>
+                        <h3>API de Perros</h3>
+                        <p>Obtén datos sobre perros.</p>
+                        <a href="https://api.aiko.top/api/dog" target="_blank">Obtener</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🐦</div>
+                        <h3>API de Aves</h3>
+                        <p>Obtén datos sobre aves.</p>
+                        <a href="https://api.aiko.top/api/bird" target="_blank">Obtener</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🦊</div>
+                        <h3>API de Zorros</h3>
+                        <p>Obtén datos sobre zorros.</p>
+                        <a href="https://api.aiko.top/api/fox" target="_blank">Obtener</a>
+                    </div>
                 </div>
-
-                <div id="dog" class="endpoint">
-                    <h3>GET /api/dog</h3>
-                    <p>Obtiene imagenes aleatorias de perros.</p>
-                    <h4>Parámetros</h4>
-                    <p>Esta petición no requiere parámetros.</p>
-                    <h4>Respuesta</h4>
-                    <pre><code>{"url":"https://cdn.aiko.top/dog/dog01.jpg"}</code></pre>
-                </div>
             </section>
-
-            <section id="examples">
-                <h2>Ejemplos de Uso</h2>
-                <p>Pronto.</p>
-
-
-            <section id="support">
-                <h2>Soporte</h2>
-                <p>Si necesitas ayuda, no dudes en contactarnos:</p>
-                <ul>
-                    <li>Discord: <a href="uycyZG7JXs">Servidor de Discord</a></li>
-                </ul>
+            <section class="endpoints">
+                <h2>Anime</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-icon">🤗</div>
+                        <h3>API de Abrazos</h3>
+                        <p>Recibe un abrazo de la API.</p>
+                        <a href="https://api.aiko.top/api/hug" target="_blank">Obtenert</a>
+                    </div>
+                </div>
             </section>
         </main>
+        <footer>
+            <p>Impulsado por <a href="https://aiko.top" target="_blank">aiko.top</a></p>
+            <p>Creado con ❤️ por Shunny</p>
+        </footer>
     </div>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 2024 Aiko API. Creado con ❤️ por Shunny.</p>
-        </div>
-    </footer>
-    <script src="scripts.js"></script>
 </body>
 </html>
