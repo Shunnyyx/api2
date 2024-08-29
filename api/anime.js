@@ -9,10 +9,10 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 
 // Endpoint para obtener información de un anime
 app.get('/api/anime', (req, res) => {
-    const { name } = req.query;
+    const { search } = req.query; // Cambiado de 'name' a 'search'
 
-    if (!name) {
-        return res.status(400).json({ error: 'Falta el parámetro de nombre del anime.' });
+    if (!search) {
+        return res.status(400).json({ error: 'Falta el parámetro de búsqueda del anime.' });
     }
 
     // Leer el archivo JSON de animes
@@ -33,7 +33,7 @@ app.get('/api/anime', (req, res) => {
             return res.status(500).json({ error: 'Error al procesar los datos.' });
         }
 
-        const anime = animeData.find(a => a.title.toLowerCase() === name.toLowerCase());
+        const anime = animeData.find(a => a.title.toLowerCase() === search.toLowerCase());
 
         if (!anime) {
             return res.status(404).json({ error: 'Anime no encontrado.' });
