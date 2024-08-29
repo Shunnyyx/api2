@@ -1,7 +1,16 @@
-{
-    "title": "Naruto",
-    "image_url": "https://example.com/image.jpg",
-    "synopsis": "Naruto Uzumaki, un joven ninja con un sueño de convertirse en el líder de su aldea, enfrenta numerosos desafíos y enemigos mientras busca cumplir su sueño.",
-    "episodes": 220,
-    "score": 8.3
-}
+[
+    {
+        "title": "Naruto",
+        "image_url": "https://example.com/naruto.jpg",
+        "synopsis": "Naruto Uzumaki, un joven ninja con un sueño de convertirse en el líder de su aldea, enfrenta numerosos desafíos y enemigos mientras busca cumplir su sueño.",
+        "episodes": 220,
+        "score": 8.3
+    },
+    {
+        "title": "One Piece",
+        "image_url": "https://example.com/onepiece.jpg",
+        "synopsis": "Monkey D. Luffy y su tripulación buscan el tesoro más grande del mundo mientras enfrentan numerosos enemigos en su aventura.",
+        "episodes": 1000,
+        "score": 9.0
+    }
+]
