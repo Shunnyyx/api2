@@ -16,13 +16,23 @@ app.get('/api/anime', (req, res) => {
     }
 
     // Leer el archivo JSON de animes
-    const filePath = path.join(__dirname, 'app', 'anime.json');
+    const filePath = path.join(__dirname, '../app', 'anime.json');
+    console.log('Ruta del archivo:', filePath); // Imprime la ruta para verificar
+
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
+            console.error('Error al leer el archivo:', err.message); // Imprime el mensaje de error
             return res.status(500).json({ error: 'Error al leer el archivo de datos.' });
         }
 
-        const animeData = JSON.parse(data);
+        let animeData;
+        try {
+            animeData = JSON.parse(data);
+        } catch (parseErr) {
+            console.error('Error al parsear el JSON:', parseErr.message); // Imprime el mensaje de error
+            return res.status(500).json({ error: 'Error al procesar los datos.' });
+        }
+
         const anime = animeData.find(a => a.title.toLowerCase() === name.toLowerCase());
 
         if (!anime) {
@@ -35,7 +45,7 @@ app.get('/api/anime', (req, res) => {
 
 // Servir el archivo HTML
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'anime.html'));
+    res.sendFile(path.join(__dirname, '../anime.html'));
 });
 
 app.listen(port, () => {
