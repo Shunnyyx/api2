@@ -1,143 +1,135 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    margin: 0;
+:root {
+    --primary-color: #8b00ff;
+    --secondary-color: #4b0082;
+    --background-color: #1a1a2e;
+    --white-text: #fff;
+    --button-radius: 3rem;
+    --card-radius: 1rem;
+    --box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+* {
     padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background-color);
+    color: var(--white-text);
+    text-align: center;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
 }
 
-header {
-    background-color: #1f1f1f;
-    color: #e0e0e0;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+.header {
+    margin-bottom: 2rem;
     text-align: center;
-    margin-bottom: 30px;
 }
 
-header .logo {
-    max-width: 150px; /* Tamaño reducido del logo */
-    height: auto;
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--primary-color);
 }
 
-main {
-    margin: 30px 40px; /* Ampliado el margen lateral de la página */
+h1 {
+    font-size: 3rem;
+    margin: 1rem 0;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 5px var(--secondary-color);
 }
 
-.endpoints {
-    margin-bottom: 30px;
+h4 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--white-text);
 }
 
-.endpoints h2 {
-    font-size: 26px;
-    color: #bb86fc;
-    border-bottom: 2px solid #bb86fc;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+.button {
+    background-color: var(--primary-color);
+    border: none;
+    color: var(--white-text);
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border-radius: var(--button-radius);
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
 }
 
-.cards {
+.button:hover {
+    background-color: var(--secondary-color);
+}
+
+.cards-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 40px; /* Espacio entre tarjetas, ajustado a 20px */
-    justify-content: space-between; /* Distribuye el espacio entre las tarjetas */
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
 }
 
 .card {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    padding: 15px; /* Padding aumentado para el contenido */
-    width: calc(25% - 20px); /* Ajusta el ancho de las tarjetas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
-    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
-    position: relative;
-    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1rem);
+    border-radius: var(--card-radius);
+    border: 0.1rem solid rgba(255, 255, 255, 0.2);
+    width: 280px;
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
     display: flex;
-    flex-direction: column; /* Ajusta la disposición del contenido dentro de la tarjeta */
-    align-items: center; /* Centra el contenido horizontalmente */
-    margin: 0 10px; /* Margen ajustado para el espaciado horizontal uniforme */
-    box-sizing: border-box; /* Incluye el padding y el borde en el ancho y alto */
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-    background-color: #2c2c2c; /* Cambio de color en hover para más efecto visual */
+    transform: translateY(-10px);
+    box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.3);
 }
 
-.card-icon {
-    font-size: 36px; /* Tamaño del icono */
-    margin-bottom: 10px; /* Espacio entre el icono y el texto */
-    transition: transform 0.5s;
+.card .top-row {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    width: 100%;
+    text-align: center;
+    color: var(--white-text);
+    font-weight: bold;
 }
 
-.card:hover .card-icon {
-    transform: rotate(10deg);
-}
-
-.card h3 {
-    margin: 0;
-    font-size: 18px; /* Tamaño del título */
-    color: #e0e0e0;
+.card h2 {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
 }
 
 .card p {
-    margin: 10px 0; /* Espacio entre párrafos y otros elementos */
-    font-size: 14px;
-    color: #b0b0b0;
-    text-align: center; /* Centra el texto en el párrafo */
-}
-
-.card a {
-    display: inline-block;
-    background-color: #bb86fc;
-    color: #121212;
-    text-decoration: none;
-    padding: 8px 12px; /* Padding ajustado */
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.3s;
-    margin-top: auto; /* Empuja el botón hacia abajo */
-    margin-bottom: 15px; /* Espacio adicional debajo del botón */
-}
-
-.card a:hover {
-    background-color: #a57ff0; /* Color menos intenso en hover */
-    transform: scale(1.05);
-}
-
-footer {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--white-text);
     text-align: center;
-    padding: 20px;
-    background-color: #1f1f1f;
-    color: #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
-    margin-top: 30px;
 }
 
-footer p {
-    margin: 0;
-}
+@media (max-width: 768px) {
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-footer a {
-    text-decoration: none; /* Elimina el subrayado del texto del enlace */
-    color: #bb86fc; /* Puedes ajustar el color según prefieras */
-}
-
-footer a:hover {
-    text-decoration: underline; /* Opcional: Subrayar el enlace al pasar el ratón por encima */
-    color: #764bda; /* Puedes ajustar el color del hover según prefieras */
-}
-
-footer .credits {
-    margin-top: 10px;
-    font-size: 14px;
+    .card {
+        width: 90%;
+    }
 }

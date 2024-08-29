@@ -3,61 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Endpoints de la API</title>
-    <link rel="icon" href="icon.png" type="image/png">
+    <meta name="description" content="API de Aiko, la mejor para desarrolladores de bots de Discord en español.">
+    <meta name="author" content="Aiko API">
+    <meta name="theme-color" content="#8b00ff">
+    <title>Aiko API</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <div class="container">
-        <header>
-            <img src="logo.png" alt="Logo" class="logo">
+        <header class="header">
+            <img src="logo.png" alt="Aiko API" class="logo">
+            <h1>Aiko API</h1>
+            <h4>La API definitiva para desarrolladores de bots de Discord en español</h4>
+            <a class="button" href="https://discord.gg/pbwCdxChZU">Soporte</a>
         </header>
-        <main>
-            <section class="endpoints">
-                <h2>Animales</h2>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-icon">🐱</div>
-                        <h3>API de Gatos</h3>
-                        <p>Obtén datos sobre gatos.</p>
-                        <a href="https://api.aiko.top/api/cat" target="_blank">Obtener</a>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🐶</div>
-                        <h3>API de Perros</h3>
-                        <p>Obtén datos sobre perros.</p>
-                        <a href="https://api.aiko.top/api/dog" target="_blank">Obtener</a>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🐦</div>
-                        <h3>API de Aves</h3>
-                        <p>Obtén datos sobre aves.</p>
-                        <a href="https://api.aiko.top/api/bird" target="_blank">Obtener</a>
-                    </div>
-                    <div class="card">
-                        <div class="card-icon">🦊</div>
-                        <h3>API de Zorros</h3>
-                        <p>Obtén datos sobre zorros.</p>
-                        <a href="https://api.aiko.top/api/fox" target="_blank">Obtener</a>
-                    </div>
+
+        <section class="cards-container">
+            <div class="card">
+                <div class="top-row">
+                    <h4>8 Ball</h4>
                 </div>
-            </section>
-            <section class="endpoints">
-                <h2>Anime</h2>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-icon">🤗</div>
-                        <h3>API de Abrazos</h3>
-                        <p>Recibe un abrazo de la API.</p>
-                        <a href="https://api.aiko.top/api/hug" target="_blank">Obtenert</a>
-                    </div>
+                <div class="content">
+                    <h2>8 Ball</h2>
+                    <p>Obtén respuestas aleatorias a tus preguntas.</p>
+                    <a class="button" href="https://api.aiko.com/fun/8ball?question=¿Voy+a+tener+nitro?">Obtener</a>
                 </div>
-            </section>
-        </main>
-        <footer>
-            <p>Impulsado por <a href="https://aiko.top" target="_blank">aiko.top</a></p>
-            <p>Creado con ❤️ por Shunny</p>
-        </footer>
+            </div>
+
+            <div class="card">
+                <div class="top-row">
+                    <h4>Clima</h4>
+                </div>
+                <div class="content">
+                    <h2>Clima</h2>
+                    <p>Consulta el clima de cualquier ciudad.</p>
+                    <a class="button" href="https://api.aiko.com/weather?city=Madrid">Obtener</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="top-row">
+                    <h4>Memes</h4>
+                </div>
+                <div class="content">
+                    <h2>Memes</h2>
+                    <p>Recibe memes aleatorios para tu entretenimiento.</p>
+                    <a class="button" href="https://api.aiko.com/fun/meme">Obtener</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="top-row">
+                    <h4>GIFs de Gatos</h4>
+                </div>
+                <div class="content">
+                    <h2>GIFs de Gatos</h2>
+                    <p>Encuentra los mejores GIFs de gatos.</p>
+                    <a class="button" href="https://api.aiko.com/fun/catgif">Obtener</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="top-row">
+                    <h4>Waifu</h4>
+                </div>
+                <div class="content">
+                    <h2>Waifu</h2>
+                    <p>Obtén imágenes aleatorias de waifus.</p>
+                    <a class="button" href="https://api.aiko.com/fun/waifu">Obtener</a>
+                </div>
+            </div>
+        </section>
+
     </div>
+
 </body>
 </html>
