@@ -1,54 +1,88 @@
 const express = require('express');
 const { createCanvas, loadImage } = require('canvas');
-const path = require('path');
+const axios = require('axios');
 
 const app = express();
 
 app.get('/api/rankcard', async (req, res) => {
+    const userId = req.query.userId;
     const username = req.query.username || 'User';
     const level = req.query.level || 1;
-    const exp = req.query.exp || 0;
-    const nextLevelExp = req.query.nextLevelExp || 1000;
-    const avatarUrl = req.query.avatar || 'https://cdn.aiko.top/default-avatar.png';
+    const exp = parseInt(req.query.exp) || 0;
+    const nextLevelExp = parseInt(req.query.nextLevelExp) || 1000;
 
-    const width = 700;
-    const height = 250;
-    const canvas = createCanvas(width, height);
-    const ctx = canvas.getContext('2d');
+    if (!userId) {
+        return res.status(400).json({ error: 'Falta el userId' });
+    }
 
-    // Background color
-    ctx.fillStyle = '#2c3e50';
-    ctx.fillRect(0, 0, width, height);
+    try {
+        // Obtener el avatar del usuario desde la API de Discord
+        const discordResponse = await axios.get(`https://discord.com/api/v9/users/${userId}`, {
+            headers: {
+                'Authorization': `Bot ${process.env.DISCORD_TOKEN}` // Asegúrate de tener el token correcto
+            }
+        });
 
-    // Load and draw avatar
-    const avatar = await loadImage(avatarUrl);
-    ctx.drawImage(avatar, 30, 30, 190, 190);
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${discordResponse.data.avatar}.png?size=256`;
 
-    // Username
-    ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 40px Poppins';
-    ctx.fillText(username, 250, 80);
+        // URL de fondo (reemplaza con tu propia imagen de fondo si es necesario)
+        const backgroundUrl = 'https://images6.alphacoders.com/132/1327974.png';
 
-    // Level and Experience
-    ctx.font = '30px Poppins';
-    ctx.fillText(`Level: ${level}`, 250, 130);
-    ctx.fillText(`XP: ${exp} / ${nextLevelExp}`, 250, 180);
+        // Crear la tarjeta
+        const width = 800;
+        const height = 300;
+        const canvas = createCanvas(width, height);
+        const ctx = canvas.getContext('2d');
 
-    // Draw progress bar
-    const progressBarWidth = 400;
-    const progress = (exp / nextLevelExp) * progressBarWidth;
+        // Cargar y dibujar el fondo
+        const background = await loadImage(backgroundUrl);
+        ctx.drawImage(background, 0, 0, width, height);
 
-    ctx.fillStyle = '#9c88ff';
-    ctx.fillRect(250, 200, progress, 25);
+        // Cargar y dibujar el avatar
+        const avatar = await loadImage(avatarUrl);
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(125, 150, 100, 0, Math.PI * 2, true);
+        ctx.closePath();
+        ctx.clip();
+        ctx.drawImage(avatar, 25, 50, 200, 200);
+        ctx.restore();
 
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(250, 200, progressBarWidth, 25);
+        // Dibujar el nombre de usuario
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 40px Poppins';
+        ctx.fillText(username, 250, 100);
 
-    // Convert to image and send
-    const buffer = canvas.toBuffer('image/png');
-    res.set('Content-Type', 'image/png');
-    res.send(buffer);
+        // Dibujar el nivel y la experiencia
+        ctx.font = '30px Poppins';
+        ctx.fillText(`Nivel: ${level}`, 250, 150);
+        ctx.fillText(`XP: ${exp} / ${nextLevelExp}`, 250, 200);
+
+        // Dibujar la barra de progreso
+        const progressBarWidth = 500;
+        const progress = (exp / nextLevelExp) * progressBarWidth;
+
+        // Fondo de la barra de progreso
+        ctx.fillStyle = '#2c3e50';
+        ctx.fillRect(250, 220, progressBarWidth, 30);
+
+        // Barra de progreso
+        ctx.fillStyle = '#9c88ff';
+        ctx.fillRect(250, 220, progress, 30);
+
+        // Borde de la barra de progreso
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(250, 220, progressBarWidth, 30);
+
+        // Enviar la imagen generada
+        const buffer = canvas.toBuffer('image/png');
+        res.set('Content-Type', 'image/png');
+        res.send(buffer);
+    } catch (err) {
+        console.error('Error al generar la rank card:', err.response?.data || err.message);
+        res.status(500).json({ error: 'Error al generar la rank card' });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
