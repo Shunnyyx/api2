@@ -1,13 +1,16 @@
 // main.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Función para obtener estadísticas del servidor
     async function fetchStats() {
         try {
-            const response = await fetch('https://api.aiko.top/api/stats'); // Asegúrate de que esta URL sea correcta
+            const response = await fetch('https://api.aiko.top/api/stats');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
             const data = await response.json();
 
-            // Actualiza los elementos HTML con los datos recibidos
+            console.log('Data received:', data); // Agregar consola para depuración
+
             document.getElementById('endpoints-count').textContent = data.endpointsCount || 'N/A';
             document.getElementById('user-count').textContent = data.userCount || 'N/A';
             document.getElementById('request-count').textContent = data.requestCount || 'N/A';
@@ -21,6 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Llama a la función para cargar las estadísticas cuando la página se cargue
     fetchStats();
 });
