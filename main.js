@@ -1,28 +1,22 @@
-// main.js
+// Función para cargar las estadísticas desde el servidor
+async function loadStats() {
+    try {
+        const response = await fetch('https://api.aiko.top/api/stats'); // Asegúrate de que esta URL sea accesible
+        const stats = await response.json();
 
-document.addEventListener('DOMContentLoaded', () => {
-    async function fetchStats() {
-        try {
-            const response = await fetch('https://api.aiko.top/api/stats');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-
-            console.log('Data received:', data); // Agregar consola para depuración
-
-            document.getElementById('endpoints-count').textContent = data.endpointsCount || 'N/A';
-            document.getElementById('user-count').textContent = data.userCount || 'N/A';
-            document.getElementById('request-count').textContent = data.requestCount || 'N/A';
-            document.getElementById('uptime').textContent = data.uptime || 'N/A';
-        } catch (error) {
-            console.error('Error al cargar las estadísticas:', error);
-            document.getElementById('endpoints-count').textContent = 'Error';
-            document.getElementById('user-count').textContent = 'Error';
-            document.getElementById('request-count').textContent = 'Error';
-            document.getElementById('uptime').textContent = 'Error';
-        }
+        // Actualizar el HTML con los datos obtenidos
+        document.getElementById('endpoints-count').textContent = stats.endpointsCount || 'Desconocido';
+        document.getElementById('user-count').textContent = stats.userCount || 'Desconocido';
+        document.getElementById('request-count').textContent = stats.requestCount || 'Desconocido';
+        document.getElementById('uptime').textContent = stats.uptime || 'Desconocido';
+    } catch (error) {
+        console.error('Error al cargar las estadísticas:', error);
+        document.getElementById('endpoints-count').textContent = 'Error';
+        document.getElementById('user-count').textContent = 'Error';
+        document.getElementById('request-count').textContent = 'Error';
+        document.getElementById('uptime').textContent = 'Error';
     }
+}
 
-    fetchStats();
-});
+// Llamar a la función cuando la página se cargue
+window.onload = loadStats;
