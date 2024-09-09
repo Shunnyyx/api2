@@ -16,6 +16,10 @@ const morseCodeTable = {
     '9': '----.', '0': '-----', ' ': ' '
 };
 
+// Variables para las estadísticas
+let requestCount = 0;
+const endpointsCount = 1; // Actualiza según la cantidad de endpoints que tengas
+
 // Función para codificar texto a código Morse
 const encodeToMorse = (text) => {
     return text.toUpperCase().split('').map(char => morseCodeTable[char] || '').join(' ');
@@ -28,6 +32,12 @@ const decodeFromMorse = (morse) => {
     );
     return morse.split(' ').map(code => reversedMorseCodeTable[code] || '').join('');
 };
+
+// Middleware para contar solicitudes
+app.use((req, res, next) => {
+    requestCount++;
+    next();
+});
 
 // Endpoint para codificar o decodificar
 app.post('/api/morse', (req, res) => {
@@ -44,6 +54,17 @@ app.post('/api/morse', (req, res) => {
     } else {
         return res.status(400).json({ error: 'Invalid action. Use "encode" or "decode".' });
     }
+});
+
+// Endpoint para obtener estadísticas
+app.get('/api/stats', (req, res) => {
+    const stats = {
+        endpointsCount: endpointsCount,
+        userCount: 'Desconocido', // Aquí podrías integrar una lógica real si es necesario
+        requestCount: requestCount,
+        uptime: '99.9%' // Cambia esto con la lógica real para obtener el tiempo de actividad
+    };
+    res.json(stats);
 });
 
 app.listen(port, () => {
