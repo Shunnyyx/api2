@@ -1,9 +1,11 @@
 const express = require('express');
+const cors = require('cors');  // Agrega esta línea
 const app = express();
 const port = 3000;
 
 // Middleware para parsear JSON
 app.use(express.json());
+app.use(cors());  // Agrega esta línea
 
 // Variable para el conteo de solicitudes
 let requestCount = 0;
@@ -14,7 +16,15 @@ app.use((req, res, next) => {
     next();
 });
 
-// Endpoint para codificar o decodificar
+// Endpoint para obtener estadísticas (sólo solicitudes)
+app.get('/api/stats', (req, res) => {
+    const stats = {
+        requestCount: requestCount,
+    };
+    res.json(stats);
+});
+
+// Otros endpoints
 app.post('/api/morse', (req, res) => {
     // Lógica de codificación y decodificación
     const { action, message } = req.body;
@@ -29,14 +39,6 @@ app.post('/api/morse', (req, res) => {
     } else {
         return res.status(400).json({ error: 'Invalid action. Use "encode" or "decode".' });
     }
-});
-
-// Endpoint para obtener estadísticas (sólo solicitudes)
-app.get('/api/stats', (req, res) => {
-    const stats = {
-        requestCount: requestCount,
-    };
-    res.json(stats);
 });
 
 app.listen(port, () => {

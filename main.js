@@ -1,7 +1,7 @@
 // Función para cargar las estadísticas desde el servidor
 async function loadStats() {
     try {
-        const response = await fetch('http://localhost:3000/api/stats'); // Cambia la URL si es necesario
+        const response = await fetch('http://localhost:3000/api/stats'); // Asegúrate de que esta URL sea correcta
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
