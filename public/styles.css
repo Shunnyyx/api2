@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #282c3c, #101836);
+    background: linear-gradient(135deg, #0d1a27, #09121b); /* Fondo azul oscuro degradado */
     color: #fff;
     display: flex;
     justify-content: center;
@@ -22,60 +22,131 @@ body {
     text-align: center;
 }
 
+/* Logo */
 .logo {
     max-width: 200px;
     margin-bottom: 30px;
 }
 
+/* Introducción y Botón de Soporte */
+.intro-message {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 20px; /* Separación del mensaje */
+}
+
+.support-btn {
+    background-color: #ff4757;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-bottom: 50px; /* Separación con los endpoints */
+    display: inline-block;
+}
+
+.support-btn:hover {
+    background-color: #e84142;
+    transform: scale(1.05);
+}
+
+/* Sección de Endpoints */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 25px;
+    margin-top: 50px; /* Separación con el botón de soporte */
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(15px);
+    padding: 25px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
 
 .card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    margin-bottom: 15px;
     color: #ffffff;
 }
 
 .card p {
-    font-size: 1rem;
-    margin-bottom: 15px;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
     color: #dcdde1;
 }
 
 .card a {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 12px 25px;
     color: #fff;
-    background: #6696ff;
-    border-radius: 25px;
+    background: #1e90ff;
+    border-radius: 30px;
     text-decoration: none;
+    font-size: 1rem;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .card a:hover {
-    background: #6696ff;
+    background: #1c7ee0;
     transform: scale(1.05);
 }
 
+/* Sección de Estadísticas */
+.stats-section {
+    margin-top: 60px; /* Mayor espacio antes de las estadísticas */
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.stats-section h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-box {
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.stat-box h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.stat-box p {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #66d9ff;
+}
+
+/* Footer */
 footer {
-    margin-top: 40px;
+    margin-top: 50px;
     font-size: 1rem;
 }
 

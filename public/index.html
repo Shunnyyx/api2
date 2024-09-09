@@ -11,7 +11,10 @@
     <div class="container">
         <header>
             <img src="logo.png" alt="Aiko Logo" class="logo">
+            <p class="intro-message">Bienvenido a la API de Aiko. Accede a diferentes endpoints para obtener imágenes y datos interesantes.</p>
+            <a href="https://aiko.support" class="support-btn">Soporte</a>
         </header>
+        
         <main>
             <section class="card-grid">
                 <div class="card">
@@ -45,10 +48,38 @@
                     <a href="https://api.aiko.top/api/anime?search=naruto" target="_blank">Ver Endpoint</a>
                 </div>
             </section>
+            
+            <!-- Sección de estadísticas -->
+            <section class="stats-section">
+                <h3>Estadísticas del Servicio</h3>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h4>Endpoints</h4>
+                        <p id="endpoints-count">Cargando...</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Usuarios</h4>
+                        <p id="user-count">Cargando...</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Solicitudes</h4>
+                        <p id="request-count">Cargando...</p>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Tiempo de Actividad</h4>
+                        <p id="uptime">Cargando...</p>
+                    </div>
+                </div>
+            </section>
+            
         </main>
+        
         <footer>
             <p>✨ Impulsado por <span class="highlight">aiko.top</span></p>
         </footer>
     </div>
+
+    <!-- Aquí incluirías el script para cargar las estadísticas dinámicas -->
+    <script src="main.js"></script>
 </body>
 </html>
