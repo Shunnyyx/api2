@@ -1,7 +1,10 @@
 // Función para cargar las estadísticas desde el servidor
 async function loadStats() {
     try {
-        const response = await fetch('https://api.aiko.top/api/stats'); // Asegúrate de que esta URL sea accesible
+        const response = await fetch('https://api.aiko.top/api/stats'); // Asegúrate de que esta URL sea correcta
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
         const stats = await response.json();
 
         // Actualizar el HTML con los datos obtenidos
@@ -19,4 +22,10 @@ async function loadStats() {
 }
 
 // Llamar a la función cuando la página se cargue
-window.onload = loadStats;
+window.onload = () => {
+    // Cargar los datos inmediatamente
+    loadStats();
+
+    // Configurar polling para cada 30 segundos (30000 ms)
+    setInterval(loadStats, 30000);
+};
