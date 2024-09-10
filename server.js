@@ -9,10 +9,10 @@ client.on('error', (err) => {
     console.error('Error de Redis:', err);
 });
 
-// Middleware para contar todas las solicitudes
+// Middleware para contar solicitudes a cada endpoint
 app.use((req, res, next) => {
-    // Incrementa el contador total de solicitudes
-    client.incr('total_requests', (err) => {
+    const endpoint = req.path;
+    client.incr(`requests:${endpoint}`, (err) => {
         if (err) {
             console.error('Error al incrementar el contador:', err);
         }
@@ -20,26 +20,59 @@ app.use((req, res, next) => {
     });
 });
 
-// Endpoint para obtener el conteo total de solicitudes
-app.get('/api/requests-count', (req, res) => {
-    // Obtiene el contador total de solicitudes
-    client.get('total_requests', (err, count) => {
-        if (err) {
-            console.error('Error al obtener el contador:', err);
-            res.status(500).send('Error del servidor');
-        } else {
-            res.json({ requestCount: count || 0 });
-        }
-    });
-});
-
-// Ejemplo de endpoints
+// Endpoints de la API
 app.get('/api/cat', (req, res) => {
     res.send('Endpoint de gatos');
 });
 
 app.get('/api/dog', (req, res) => {
     res.send('Endpoint de perros');
+});
+
+app.get('/api/bird', (req, res) => {
+    res.send('Endpoint de pájaros');
+});
+
+app.get('/api/fox', (req, res) => {
+    res.send('Endpoint de zorros');
+});
+
+app.get('/api/hug', (req, res) => {
+    res.send('Endpoint de abrazos');
+});
+
+app.get('/api/anime', (req, res) => {
+    res.send('Endpoint de búsqueda de anime');
+});
+
+// Endpoint para obtener el conteo total de solicitudes
+app.get('/api/requests-count', (req, res) => {
+    client.keys('requests:*', (err, keys) => {
+        if (err) {
+            console.error('Error al obtener las claves:', err);
+            res.status(500).send('Error del servidor');
+            return;
+        }
+
+        const multi = client.multi();
+        keys.forEach(key => multi.get(key));
+        
+        multi.exec((err, replies) => {
+            if (err) {
+                console.error('Error al obtener los valores:', err);
+                res.status(500).send('Error del servidor');
+                return;
+            }
+
+            const counts = {};
+            keys.forEach((key, index) => {
+                const endpoint = key.replace('requests:', '');
+                counts[endpoint] = replies[index] || 0;
+            });
+
+            res.json(counts);
+        });
+    });
 });
 
 // Inicia el servidor
