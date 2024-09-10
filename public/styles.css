@@ -154,9 +154,9 @@ footer {
     color: #ff9ff3;
 }
 
-/* Estilo para la barra de desplazamiento */
+/* Estilo para la barra de desplazamiento en navegadores WebKit */
 ::-webkit-scrollbar {
-    width: 10px; /* Ancho de la barra de desplazamiento */
+    width: 12px; /* Ancho de la barra de desplazamiento */
 }
 
 ::-webkit-scrollbar-track {
@@ -165,15 +165,21 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #0064c8; /* Color de la barra */
+    background: #1e90ff; /* Color de la barra */
     border-radius: 10px; /* Bordes redondeados de la barra */
-    border: 2px solid #0d1a27; /* Borde alrededor de la barra */
+    border: 3px solid #0d1a27; /* Borde alrededor de la barra */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #004d9b; /* Color de la barra al pasar el mouse */
+    background: #1c7ee0; /* Color de la barra al pasar el mouse */
 }
 
-/* Para Firefox */
+/* Estilo para la barra de desplazamiento en Firefox */
 scrollbar-width: thin; /* Reduce el tamaño de la barra */
-scrollbar-color: #1e90ff #0d1a27; /* Color de la barra y del fondo */
+scrollbar-color: #1e90ff #0d1a27; /* Color de la barra (primero) y del fondo (segundo) */
+
+/* Estilo adicional para mejorar compatibilidad en otros navegadores */
+html {
+    scrollbar-width: thin; /* Reduce el tamaño de la barra en Firefox */
+    scrollbar-color: #1e90ff #0d1a27; /* Colores personalizados para la barra en Firefox */
+}
