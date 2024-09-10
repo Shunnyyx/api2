@@ -1,22 +1,49 @@
 const express = require('express');
-const redis = require('redis');
+const fs = require('fs');
+const path = require('path');
 const app = express();
 const port = 3000;
 
-// Configura Redis
-const client = redis.createClient();
-client.on('error', (err) => {
-    console.error('Error de Redis:', err);
-});
+// Ruta al archivo JSON que almacenará el conteo
+const statsFilePath = path.join(__dirname, 'stats.json');
+
+// Inicializa el archivo JSON si no existe
+if (!fs.existsSync(statsFilePath)) {
+    fs.writeFileSync(statsFilePath, JSON.stringify({
+        '/api/cat': 0,
+        '/api/dog': 0,
+        '/api/bird': 0,
+        '/api/fox': 0,
+        '/api/hug': 0,
+        '/api/anime': 0
+    }, null, 2));
+}
 
 // Middleware para contar solicitudes a cada endpoint
 app.use((req, res, next) => {
     const endpoint = req.path;
-    client.incr(`requests:${endpoint}`, (err) => {
+    
+    // Lee el archivo JSON
+    fs.readFile(statsFilePath, 'utf8', (err, data) => {
         if (err) {
-            console.error('Error al incrementar el contador:', err);
+            console.error('Error al leer el archivo JSON:', err);
+            return next();
         }
-        next();
+        
+        const stats = JSON.parse(data);
+        
+        // Incrementa el conteo para el endpoint
+        if (stats[endpoint] !== undefined) {
+            stats[endpoint]++;
+        }
+
+        // Escribe el archivo JSON con el nuevo conteo
+        fs.writeFile(statsFilePath, JSON.stringify(stats, null, 2), (err) => {
+            if (err) {
+                console.error('Error al escribir el archivo JSON:', err);
+            }
+            next();
+        });
     });
 });
 
@@ -47,31 +74,14 @@ app.get('/api/anime', (req, res) => {
 
 // Endpoint para obtener el conteo total de solicitudes
 app.get('/api/requests-count', (req, res) => {
-    client.keys('requests:*', (err, keys) => {
+    fs.readFile(statsFilePath, 'utf8', (err, data) => {
         if (err) {
-            console.error('Error al obtener las claves:', err);
+            console.error('Error al leer el archivo JSON:', err);
             res.status(500).send('Error del servidor');
             return;
         }
 
-        const multi = client.multi();
-        keys.forEach(key => multi.get(key));
-        
-        multi.exec((err, replies) => {
-            if (err) {
-                console.error('Error al obtener los valores:', err);
-                res.status(500).send('Error del servidor');
-                return;
-            }
-
-            const counts = {};
-            keys.forEach((key, index) => {
-                const endpoint = key.replace('requests:', '');
-                counts[endpoint] = replies[index] || 0;
-            });
-
-            res.json(counts);
-        });
+        res.json(JSON.parse(data));
     });
 });
 
