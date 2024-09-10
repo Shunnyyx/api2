@@ -1,91 +1,58 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
+const fs = require('fs');
+
 const app = express();
 const port = 3000;
+const dataDirectory = path.join(__dirname, 'data');
 
-// Ruta al archivo JSON que almacenará el conteo
-const statsFilePath = path.join(__dirname, 'stats.json');
+// Middleware para manejar JSON
+app.use(express.json());
 
-// Inicializa el archivo JSON si no existe
-if (!fs.existsSync(statsFilePath)) {
-    fs.writeFileSync(statsFilePath, JSON.stringify({
-        '/api/cat': 0,
-        '/api/dog': 0,
-        '/api/bird': 0,
-        '/api/fox': 0,
-        '/api/hug': 0,
-        '/api/anime': 0
-    }, null, 2));
+// Función para crear rutas dinámicamente
+function createDynamicRoutes() {
+  fs.readdir(dataDirectory, (err, files) => {
+    if (err) {
+      console.error('Error al leer el directorio de datos:', err);
+      return;
+    }
+
+    files.forEach(file => {
+      if (path.extname(file) === '.json') {
+        const endpointName = path.basename(file, '.json');
+        const filePath = path.join(dataDirectory, file);
+
+        app.get(`/api/${endpointName}`, (req, res) => {
+          fs.readFile(filePath, 'utf-8', (err, data) => {
+            if (err) {
+              return res.status(500).json({ error: `Error al leer el archivo de datos ${endpointName}` });
+            }
+
+            try {
+              const jsonData = JSON.parse(data);
+              const items = jsonData[endpointName];
+
+              if (!items || items.length === 0) {
+                return res.status(404).json({ error: `No se encontraron datos para ${endpointName}` });
+              }
+
+              const randomItem = items[Math.floor(Math.random() * items.length)];
+              res.json(randomItem);
+
+            } catch (parseError) {
+              return res.status(500).json({ error: `Error al parsear el archivo de datos ${endpointName}` });
+            }
+          });
+        });
+      }
+    });
+  });
 }
 
-// Middleware para contar solicitudes a cada endpoint
-app.use((req, res, next) => {
-    const endpoint = req.path;
-    
-    // Lee el archivo JSON
-    fs.readFile(statsFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error al leer el archivo JSON:', err);
-            return next();
-        }
-        
-        const stats = JSON.parse(data);
-        
-        // Incrementa el conteo para el endpoint
-        if (stats[endpoint] !== undefined) {
-            stats[endpoint]++;
-        }
+// Crear rutas dinámicamente
+createDynamicRoutes();
 
-        // Escribe el archivo JSON con el nuevo conteo
-        fs.writeFile(statsFilePath, JSON.stringify(stats, null, 2), (err) => {
-            if (err) {
-                console.error('Error al escribir el archivo JSON:', err);
-            }
-            next();
-        });
-    });
-});
-
-// Endpoints de la API
-app.get('/api/cat', (req, res) => {
-    res.send('Endpoint de gatos');
-});
-
-app.get('/api/dog', (req, res) => {
-    res.send('Endpoint de perros');
-});
-
-app.get('/api/bird', (req, res) => {
-    res.send('Endpoint de pájaros');
-});
-
-app.get('/api/fox', (req, res) => {
-    res.send('Endpoint de zorros');
-});
-
-app.get('/api/hug', (req, res) => {
-    res.send('Endpoint de abrazos');
-});
-
-app.get('/api/anime', (req, res) => {
-    res.send('Endpoint de búsqueda de anime');
-});
-
-// Endpoint para obtener el conteo total de solicitudes
-app.get('/api/requests-count', (req, res) => {
-    fs.readFile(statsFilePath, 'utf8', (err, data) => {
-        if (err) {
-            console.error('Error al leer el archivo JSON:', err);
-            res.status(500).send('Error del servidor');
-            return;
-        }
-
-        res.json(JSON.parse(data));
-    });
-});
-
-// Inicia el servidor
+// Iniciar el servidor
 app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });
