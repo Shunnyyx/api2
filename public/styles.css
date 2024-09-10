@@ -153,3 +153,27 @@ footer {
 .highlight {
     color: #ff9ff3;
 }
+
+/* Estilo para la barra de desplazamiento */
+::-webkit-scrollbar {
+    width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+::-webkit-scrollbar-track {
+    background: #0d1a27; /* Color del fondo del track */
+    border-radius: 10px; /* Bordes redondeados del track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #0064c8; /* Color de la barra */
+    border-radius: 10px; /* Bordes redondeados de la barra */
+    border: 2px solid #0d1a27; /* Borde alrededor de la barra */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #004d9b; /* Color de la barra al pasar el mouse */
+}
+
+/* Para Firefox */
+scrollbar-width: thin; /* Reduce el tamaño de la barra */
+scrollbar-color: #1e90ff #0d1a27; /* Color de la barra y del fondo */
