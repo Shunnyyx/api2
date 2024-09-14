@@ -1,86 +1,32 @@
 const express = require('express');
-const http = require('http');
-const WebSocket = require('ws');
+const fs = require('fs');
+const path = require('path');
 const app = express();
-const port = process.env.PORT || 3000;
 
-require('dotenv').config(); // Para manejar las variables de entorno
+app.use(express.json()); // Para manejar JSON en el cuerpo de la solicitud
 
-// Crear servidor HTTP
-const server = http.createServer(app);
+// Ruta base para los endpoints
+const apiRouter = express.Router();
 
-// Crear servidor WebSocket
-const wss = new WebSocket.Server({ server });
-
-// Variables globales para estadísticas
-let requestCount = 0; // Contador de solicitudes
-let userCount = 450;  // Número de usuarios
-let endpointsCount = 6; // Número de endpoints
-let uptime = '99.9%';  // Simulación del uptime del servidor
-
-// Middleware para contar solicitudes
-app.use(express.json());
-app.use((req, res, next) => {
-    requestCount++;
-    next();
+// Lee todos los archivos en la carpeta '/api'
+fs.readdirSync(path.join(__dirname, 'api')).forEach(file => {
+  if (file.endsWith('.js')) {
+    const route = require(`./api/${file}`);
+    const routeName = `/${path.basename(file, '.js')}`;
+    apiRouter.use(routeName, route);
+  }
 });
 
-// Importar y usar routers para cat, dog y chatbot
-app.use('/api/cat', require('./api/cat'));
-app.use('/api/dog', require('./api/dog'));
-app.use('/api/chatbot', require('./api/chatbot'));
+// Usa el enrutador de la API
+app.use('/api', apiRouter);
 
-// Endpoint de estadísticas
-app.get('/api/stats', (req, res) => {
-    const stats = {
-        endpointsCount,
-        userCount,
-        requestCount,
-        uptime
-    };
-    res.json(stats);
-});
-
-// Manejo de conexiones WebSocket
-wss.on('connection', ws => {
-    console.log('Nueva conexión WebSocket');
-
-    // Enviar estadísticas iniciales al cliente conectado
-    ws.send(JSON.stringify({
-        endpointsCount,
-        userCount,
-        requestCount,
-        uptime
-    }));
-
-    // Enviar estadísticas periódicamente cada 30 segundos
-    const interval = setInterval(() => {
-        ws.send(JSON.stringify({
-            endpointsCount,
-            userCount,
-            requestCount,
-            uptime
-        }));
-    }, 30000); // Cada 30 segundos
-
-    // Limpiar el intervalo cuando se cierre la conexión
-    ws.on('close', () => {
-        clearInterval(interval);
-    });
-
-    // Manejar errores en WebSocket
-    ws.on('error', (error) => {
-        console.error('Error en WebSocket:', error);
-    });
-});
-
-// Manejo de errores globales en Express
+// Manejo de errores
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Algo salió mal!');
+  console.error(err.stack);
+  res.status(500).send('Algo salió mal!');
 });
 
-// Iniciar servidor
-server.listen(port, () => {
-    console.log(`Servidor en ejecución en el puerto ${port}`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
