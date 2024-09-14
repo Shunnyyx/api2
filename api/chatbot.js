@@ -5,7 +5,7 @@ const app = express();
 // Crear una instancia del NLP Manager
 const manager = new NlpManager({ languages: ['en', 'es'], nlu: { log: false } });
 
-// Entrenar al bot con algunos ejemplos
+// Entrenamiento del bot
 (async () => {
     try {
         // Entrenamiento en inglés
@@ -30,7 +30,7 @@ const manager = new NlpManager({ languages: ['en', 'es'], nlu: { log: false } })
         manager.save();
         console.log('Bot training complete');
     } catch (error) {
-        console.error('Error al entrenar el bot:', error);
+        console.error('Error during bot training:', error);
     }
 })();
 
