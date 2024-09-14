@@ -1,16 +1,12 @@
 const express = require('express');
 const { createCanvas, loadImage } = require('canvas');
-const app = express();
-const PORT = 3000;
+const router = express.Router();
 
-app.use(express.json());
-
-// Endpoint para generar tarjeta de bienvenida
-app.get('/welcomecard', async (req, res) => {
+router.get('/welcomecard', async (req, res) => {
     const { background, avatar, name, welcomeText, memberCount } = req.query;
 
     if (!background || !avatar || !name || !welcomeText) {
-        return res.status(400).json({ error: 'Missing required query parameters' });
+        return res.status(400).json({ error: 'Faltan parámetros obligatorios' });
     }
 
     try {
@@ -49,11 +45,8 @@ app.get('/welcomecard', async (req, res) => {
         res.send(buffer);
 
     } catch (error) {
-        res.status(500).json({ error: 'Error generating the welcome card' });
+        res.status(500).json({ error: 'Error al generar la tarjeta de bienvenida' });
     }
 });
 
-// Iniciar el servidor
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = router;

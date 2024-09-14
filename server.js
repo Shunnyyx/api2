@@ -6,6 +6,9 @@ const app = express();
 const port = 3000;
 const dataDirectory = path.join(__dirname, 'data');
 
+// Importar el endpoint de la tarjeta de bienvenida
+const welcomecard = require('./api/welcomecard'); 
+
 // Middleware para manejar JSON
 app.use(express.json());
 
@@ -51,6 +54,9 @@ function createDynamicRoutes() {
 
 // Crear rutas dinámicamente
 createDynamicRoutes();
+
+// Usar el endpoint de la tarjeta de bienvenida
+app.use('/api', welcomecard);
 
 // Iniciar el servidor
 app.listen(port, () => {
