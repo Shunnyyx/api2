@@ -7,7 +7,7 @@ const port = 3000;
 const dataDirectory = path.join(__dirname, 'data');
 
 // Importar el endpoint de la tarjeta de bienvenida
-const welcomecard = require('./api/welcomecard'); 
+const welcomecard = require('./api/welcomecard');
 
 // Middleware para manejar JSON
 app.use(express.json());

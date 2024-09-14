@@ -2,9 +2,9 @@
   "name": "api-project",
   "version": "1.0.0",
   "description": "Un proyecto de API usando Express en Vercel",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "build": "echo 'No build step required' && exit 0"
   },
   "dependencies": {
@@ -12,7 +12,6 @@
     "canvas": "^2.11.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "fetch": "^1.1.0",
     "fs-extra": "^10.0.0",
     "path": "^0.12.7",
     "redis": "^4.7.0",
