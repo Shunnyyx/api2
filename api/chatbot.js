@@ -1,11 +1,20 @@
-// api/chatbot.js
 const express = require('express');
 const router = express.Router();
 const { OpenAI } = require('openai');
-require('dotenv').config(); // Para manejar las variables de entorno
+
+// Solo carga dotenv si no estás en producción
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+// Validar la presencia de la clave API
+if (!process.env.OPENAI_API_KEY) {
+  console.error("OpenAI API Key is missing!");
+  process.exit(1); // Finaliza el proceso si no hay clave
+}
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY // Tu clave API de OpenAI
+  apiKey: process.env.OPENAI_API_KEY // Tu clave API de OpenAI en Vercel
 });
 
 // Diccionario de respuestas personalizadas
@@ -21,6 +30,7 @@ router.post('/', async (req, res) => {
   const userMessage = req.body.message.toLowerCase();
   let responseText;
 
+  // Verifica si hay una respuesta personalizada
   if (customResponses[userMessage]) {
     responseText = customResponses[userMessage];
   } else {
@@ -33,6 +43,7 @@ router.post('/', async (req, res) => {
       });
       responseText = response.choices[0].text.trim();
     } catch (error) {
+      console.error("Error calling OpenAI API:", error.message); // Manejo de errores detallado
       responseText = "Sorry, there was an error processing your request.";
     }
   }
