@@ -34,6 +34,10 @@ app.get('/api/stats', (req, res) => {
     res.json(stats);
 });
 
+// Endpoint del chatbot
+const chatbot = require('./chatbot');
+app.use('/api/chatbot', chatbot);
+
 // Manejo de conexiones WebSocket
 wss.on('connection', ws => {
     console.log('Nueva conexión WebSocket');
@@ -59,6 +63,12 @@ wss.on('connection', ws => {
     ws.on('close', () => {
         clearInterval(interval);
     });
+});
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Algo salió mal!');
 });
 
 // Iniciar servidor
