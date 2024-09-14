@@ -3,6 +3,11 @@ const router = express.Router();
 const { OpenAI } = require('openai');
 require('dotenv').config(); // Para manejar las variables de entorno
 
+// Verifica que la clave API esté configurada
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error('Missing OPENAI_API_KEY in environment variables');
+}
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY // Tu clave API de OpenAI
 });
@@ -17,6 +22,11 @@ const customResponses = {
 
 // Endpoint del chatbot
 router.post('/', async (req, res) => {
+  // Verifica que req.body.message esté presente
+  if (!req.body.message || typeof req.body.message !== 'string') {
+    return res.status(400).json({ response: "Invalid request. Please provide a valid message." });
+  }
+
   const userMessage = req.body.message.toLowerCase();
   let responseText;
 
