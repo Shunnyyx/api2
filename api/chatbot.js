@@ -1,61 +1,36 @@
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const router = express.Router(); // Usa Router para modularidad
+const axios = require('axios');
+const router = express.Router();
 
-const chatbotDataPath = path.join(__dirname, '..', 'app', 'chatbot.json');
-let chatbotData;
-
-// Leer el archivo JSON al iniciar la aplicación
-fs.readFile(chatbotDataPath, 'utf-8', (err, data) => {
-    if (err) {
-        console.error('Error al leer el archivo JSON del chatbot:', err);
-        process.exit(1); // Salir si hay un error al leer el archivo
+// Función para cargar el modelo
+async function loadModel() {
+    try {
+        const response = await axios.get('https://example.com/path/to/model.nlp', {
+            responseType: 'arraybuffer' // Usa arraybuffer si el archivo es binario
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error al cargar el modelo:', error);
+        throw new Error('No se pudo cargar el modelo');
     }
-    chatbotData = JSON.parse(data);
-});
+}
 
-// Middleware para manejar JSON
-router.use(express.json());
+// Función para manejar la solicitud del chatbot
+async function handleRequest(req, res) {
+    try {
+        const modelData = await loadModel();
+        // Aquí puedes procesar la solicitud usando modelData
+        // Por ejemplo, podrías pasar modelData a una función que maneje la lógica del chatbot
 
-// Middleware para filtrar contenido inapropiado
-function filterText(text) {
-    if (!chatbotData || !chatbotData.badWords) return text;
-
-    let filteredText = text;
-    chatbotData.badWords.forEach(word => {
-        const regex = new RegExp(`\\b${word}\\b`, 'gi');
-        filteredText = filteredText.replace(regex, '[censored]');
-    });
-    return filteredText;
+        // Simulación de respuesta del chatbot
+        const responseMessage = 'Modelo cargado correctamente'; // Aquí reemplaza con la respuesta real
+        res.json({ message: responseMessage });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al procesar la solicitud' });
+    }
 }
 
 // Endpoint del chatbot
-router.get('/', (req, res) => {
-    try {
-        const message = req.query.message;
-        const language = req.query.language || 'en'; // Usa inglés por defecto
-
-        if (!message) {
-            return res.status(400).json({ error: 'No message provided' });
-        }
-
-        // Filtrar mensaje del usuario
-        const filteredMessage = filterText(message);
-
-        // Obtener respuesta del bot
-        const response = chatbotData.responses[language] || {};
-        const botResponse = response[filteredMessage] || 'I\'m sorry, I don\'t understand that request.';
-
-        // Filtrar respuesta del bot
-        const filteredResponse = filterText(botResponse);
-
-        // Enviar respuesta en formato JSON
-        res.json({ response: filteredResponse });
-    } catch (error) {
-        console.error('Error en el endpoint del chatbot:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
+router.get('/', handleRequest);
 
 module.exports = router;
