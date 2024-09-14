@@ -1,20 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { OpenAI } = require('openai');
+const { OpenAI } = require('openai'); // Asegúrate de que este paquete esté instalado
 
-// Solo carga dotenv si no estás en producción
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
-// Validar la presencia de la clave API
-if (!process.env.OPENAI_API_KEY) {
-  console.error("OpenAI API Key is missing!");
-  process.exit(1); // Finaliza el proceso si no hay clave
-}
-
+// Instancia de OpenAI usando la clave de entorno almacenada en Vercel
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY // Tu clave API de OpenAI en Vercel
+  apiKey: process.env.OPENAI_API_KEY // Asegúrate de haber configurado esta variable en Vercel
 });
 
 // Diccionario de respuestas personalizadas
@@ -37,18 +27,22 @@ router.post('/', async (req, res) => {
     // Consulta a la API de OpenAI si no hay una respuesta personalizada
     try {
       const response = await openai.completions.create({
-        model: 'text-davinci-003', // Puedes usar el modelo más adecuado
+        model: 'text-davinci-003', // O el modelo que prefieras
         prompt: userMessage,
         max_tokens: 150
       });
       responseText = response.choices[0].text.trim();
     } catch (error) {
-      console.error("Error calling OpenAI API:", error.message); // Manejo de errores detallado
+      console.error("Error calling OpenAI API:", error.message);
       responseText = "Sorry, there was an error processing your request.";
     }
   }
 
-  res.json({ response: responseText });
+  // Respuesta en formato JSON que incluye tanto el mensaje del usuario como la respuesta del bot
+  res.json({
+    userMessage: req.body.message,  // Mensaje original del usuario
+    botResponse: responseText       // Respuesta generada por el bot
+  });
 });
 
 module.exports = router;

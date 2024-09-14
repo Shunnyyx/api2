@@ -1,6 +1,3 @@
 {
-  "what is your name": "I'm Aiko, created by Aiko™. How can I assist you today?",
-  "how are you": "I'm just a bot, but I'm here to help you! How can I assist you?",
-  "what can you do": "I can answer your questions and provide information. Just ask me anything!",
-  "default": "Sorry, I don't understand that question."
+  "response": "I'm Aiko, created by Aiko™. How can I assist you today?"
 }
