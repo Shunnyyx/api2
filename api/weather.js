@@ -1,5 +1,7 @@
 const express = require('express');
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 
 // Reemplaza 'YOUR_API_KEY' con tu clave de API de OpenWeatherMap
@@ -55,6 +57,11 @@ router.get('/', async (req, res) => {
       forecast: [] // Aquí se podrían agregar datos de pronóstico si es necesario
     };
 
+    // Guardar la información en el archivo JSON
+    const filePath = path.join(__dirname, '../data/weather.json');
+    fs.writeFileSync(filePath, JSON.stringify(weatherData, null, 2));
+
+    // Enviar la respuesta al cliente
     res.json(weatherData);
   } catch (error) {
     console.error(error);
