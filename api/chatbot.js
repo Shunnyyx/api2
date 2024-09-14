@@ -1,23 +1,27 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 
-// Respuestas predefinidas del chatbot Aiko
-const responses = {
-    "what is your name": "I'm Aiko, created by Aiko™. How can I assist you today?",
-    "how are you": "I'm just a bot, but I'm here to help you! How can I assist you?",
-    "what can you do": "I can answer your questions and provide information. Just ask me anything!",
-    "who created you": "I was created by Aiko™. Do you have any other questions?",
-    "hello": "Hello! How can I help you today?",
-    "bye": "Goodbye! Have a great day!",
-    // Puedes agregar más respuestas aquí
-};
+// Ruta al archivo JSON
+const responseFilePath = path.join(__dirname, '../app/response.json');
 
-// Endpoint del chatbot
+// Cargar respuestas desde el archivo JSON
+let responses = {};
+try {
+    responses = JSON.parse(fs.readFileSync(responseFilePath, 'utf-8'));
+} catch (error) {
+    console.error('Error al leer el archivo de respuestas:', error);
+    responses = {
+        "default": "Sorry, I don't understand that question."
+    };
+}
+
+// Endpoint para el chatbot
 router.get('/', (req, res) => {
-    const message = req.query.msg ? req.query.msg.toLowerCase() : '';
-    const responseMessage = responses[message] || "Sorry, I don't understand that question. Could you please rephrase it?";
-
-    res.json({ response: responseMessage });
+    const msg = req.query.msg ? req.query.msg.toLowerCase() : '';
+    const response = responses[msg] || responses["default"];
+    res.json({ response });
 });
 
 module.exports = router;
