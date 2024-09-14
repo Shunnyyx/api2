@@ -1,47 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const { OpenAI } = require('openai');
+require('dotenv').config(); // Para manejar las variables de entorno
 
-// Instancia de OpenAI utilizando la clave API de las variables de entorno
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY // Configura esta variable en Vercel
+  apiKey: process.env.OPENAI_API_KEY // Tu clave API de OpenAI
 });
 
 // Diccionario de respuestas personalizadas
 const customResponses = {
   "what is your name": "I'm Aiko, created by Aiko™. How can I assist you today?",
-  "how are you": "I'm just a bot, but I'm here to help you!",
-  "what can you do": "I can answer questions and provide information. Just ask me anything!",
+  "how are you": "I'm just a bot, but I'm here to help you! How can I assist you?",
+  "what can you do": "I can answer your questions and provide information. Just ask me anything!",
   "default": "Sorry, I don't understand that question."
 };
 
-// Endpoint para recibir mensajes del usuario
+// Endpoint del chatbot
 router.post('/', async (req, res) => {
   const userMessage = req.body.message.toLowerCase();
   let responseText;
 
-  // Verifica si hay una respuesta personalizada
   if (customResponses[userMessage]) {
     responseText = customResponses[userMessage];
   } else {
-    // Si no hay respuesta personalizada, llama a OpenAI
+    // Consulta a la API de OpenAI si no hay una respuesta personalizada
     try {
       const response = await openai.completions.create({
-        model: 'text-davinci-003',
+        model: 'text-davinci-003', // Puedes usar el modelo más adecuado
         prompt: userMessage,
         max_tokens: 150
       });
       responseText = response.choices[0].text.trim();
     } catch (error) {
+      console.error('Error al consultar OpenAI:', error);
       responseText = "Sorry, there was an error processing your request.";
     }
   }
 
-  // Devuelve la respuesta en formato JSON
-  res.json({
-    userMessage: req.body.message,
-    botResponse: responseText
-  });
+  res.json({ response: responseText });
 });
 
 module.exports = router;
