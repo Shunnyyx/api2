@@ -1,8 +1,11 @@
+// index.js
 const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const app = express();
 const port = process.env.PORT || 3000;
+
+require('dotenv').config(); // Para manejar las variables de entorno
 
 // Crear servidor HTTP
 const server = http.createServer(app);
@@ -10,17 +13,13 @@ const server = http.createServer(app);
 // Crear servidor WebSocket
 const wss = new WebSocket.Server({ server });
 
-let requestCount = 0;
-
 // Middleware para contar solicitudes
-app.use((req, res, next) => {
-    requestCount++;
-    next();
-});
+app.use(express.json());
 
-// Importar y usar routers para cat y dog
+// Importar y usar routers para cat, dog y chatbot
 app.use('/api/cat', require('./api/cat'));
 app.use('/api/dog', require('./api/dog'));
+app.use('/api/chatbot', require('./api/chatbot'));
 
 // Endpoint de estadísticas
 app.get('/api/stats', (req, res) => {
@@ -33,9 +32,6 @@ app.get('/api/stats', (req, res) => {
 
     res.json(stats);
 });
-
-// Endpoint del chatbot
-app.use('/api/chatbot', require('./api/chatbot'));
 
 // Manejo de conexiones WebSocket
 wss.on('connection', ws => {
