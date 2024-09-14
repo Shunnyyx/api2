@@ -1,28 +1,24 @@
-const express = require('express');
 const axios = require('axios');
-const fs = require('fs');
 const path = require('path');
-const router = express.Router();
 
-// Reemplaza 'YOUR_API_KEY' con tu clave de API de OpenWeatherMap
+// Asegúrate de tener tu clave API configurada en las variables de entorno
 const API_KEY = process.env.OPENWEATHERMAP_API_KEY;
 
-// Ruta para obtener el clima
-router.get('/', async (req, res) => {
+module.exports = async (req, res) => {
   try {
-    // Obtener la ubicación de los parámetros de consulta
+    // Obtén la ubicación desde los parámetros de la consulta
     const { location } = req.query;
 
     if (!location) {
-      return res.status(400).send('Parámetro de ubicación es requerido');
+      return res.status(400).json({ error: 'Parámetro de ubicación es requerido' });
     }
 
-    // Solicitud a la API de OpenWeatherMap
-    const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
+    // Solicita datos del clima a la API de OpenWeatherMap
+    const response = await axios.get('https://api.openweathermap.org/data/2.5/weather', {
       params: {
-        q: location, // Usar la ubicación proporcionada por el usuario
+        q: location,
         appid: API_KEY,
-        units: 'metric' // Usar 'imperial' para Fahrenheit
+        units: 'metric' // Usa 'imperial' para Fahrenheit
       }
     });
 
@@ -35,7 +31,7 @@ router.get('/', async (req, res) => {
         lat: data.coord.lat,
         long: data.coord.lon,
         timezone: data.timezone,
-        alert: "", // Puede ser usado para alertas meteorológicas
+        alert: "",
         degreetype: "C",
         imagerelativeurl: "http://openweathermap.org/img/wn/"
       },
@@ -54,19 +50,14 @@ router.get('/', async (req, res) => {
         windspeed: `${data.wind.speed} m/s`,
         imageUrl: `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`
       },
-      forecast: [] // Aquí se podrían agregar datos de pronóstico si es necesario
+      forecast: [] // Agrega datos de pronóstico si es necesario
     };
 
-    // Guardar la información en el archivo JSON
-    const filePath = path.join(__dirname, '../data/weather.json');
-    fs.writeFileSync(filePath, JSON.stringify(weatherData, null, 2));
-
-    // Enviar la respuesta al cliente
+    // Responde con los datos del clima
     res.json(weatherData);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al obtener los datos del clima');
-  }
-});
 
-module.exports = router;
+  } catch (error) {
+    console.error('Error al obtener los datos del clima:', error);
+    res.status(500).json({ error: 'Error al obtener los datos del clima' });
+  }
+};
