@@ -35,8 +35,7 @@ app.get('/api/stats', (req, res) => {
 });
 
 // Endpoint del chatbot
-const chatbot = require('./api/chatbot'); // Asegúrate de que esta ruta sea correcta
-app.use('/api/chatbot', chatbot);
+app.use('/api/chatbot', require('./api/chatbot'));
 
 // Manejo de conexiones WebSocket
 wss.on('connection', ws => {

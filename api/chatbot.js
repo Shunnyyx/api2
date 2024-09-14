@@ -1,36 +1,23 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
 
-// Función para cargar el modelo
-async function loadModel() {
-    try {
-        const response = await axios.get('https://example.com/path/to/model.nlp', {
-            responseType: 'arraybuffer' // Usa arraybuffer si el archivo es binario
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Error al cargar el modelo:', error);
-        throw new Error('No se pudo cargar el modelo');
-    }
-}
-
-// Función para manejar la solicitud del chatbot
-async function handleRequest(req, res) {
-    try {
-        const modelData = await loadModel();
-        // Aquí puedes procesar la solicitud usando modelData
-        // Por ejemplo, podrías pasar modelData a una función que maneje la lógica del chatbot
-
-        // Simulación de respuesta del chatbot
-        const responseMessage = 'Modelo cargado correctamente'; // Aquí reemplaza con la respuesta real
-        res.json({ message: responseMessage });
-    } catch (error) {
-        res.status(500).json({ error: 'Error al procesar la solicitud' });
-    }
-}
+// Respuestas predefinidas del chatbot Aiko
+const responses = {
+    "what is your name": "I'm Aiko, created by Aiko™. How can I assist you today?",
+    "how are you": "I'm just a bot, but I'm here to help you! How can I assist you?",
+    "what can you do": "I can answer your questions and provide information. Just ask me anything!",
+    "who created you": "I was created by Aiko™. Do you have any other questions?",
+    "hello": "Hello! How can I help you today?",
+    "bye": "Goodbye! Have a great day!",
+    // Puedes agregar más respuestas aquí
+};
 
 // Endpoint del chatbot
-router.get('/', handleRequest);
+router.get('/', (req, res) => {
+    const message = req.query.msg ? req.query.msg.toLowerCase() : '';
+    const responseMessage = responses[message] || "Sorry, I don't understand that question. Could you please rephrase it?";
+
+    res.json({ response: responseMessage });
+});
 
 module.exports = router;
