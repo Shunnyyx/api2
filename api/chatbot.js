@@ -28,6 +28,7 @@ const manager = new NlpManager({ languages: ['en', 'es'], nlu: { log: false } })
 
         await manager.train();
         manager.save();
+        console.log('Bot training complete');
     } catch (error) {
         console.error('Error al entrenar el bot:', error);
     }
