@@ -2,15 +2,19 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 
-const app = express();
-const port = 3000;
-const dataDirectory = path.join(__dirname, 'data');
-
 // Importar el endpoint de la tarjeta de bienvenida
 const welcomecard = require('./api/welcomecard');
 
+const app = express();
+const port = 3000;
+const dataDirectory = path.join(__dirname, 'data');
+const imagesDirectory = path.join(__dirname, 'generated_images');
+
 // Middleware para manejar JSON
 app.use(express.json());
+
+// Middleware para servir imágenes generadas
+app.use('/generated_images', express.static(imagesDirectory));
 
 // Función para crear rutas dinámicamente
 function createDynamicRoutes() {

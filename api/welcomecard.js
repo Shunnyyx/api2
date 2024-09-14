@@ -1,6 +1,15 @@
 const express = require('express');
 const { createCanvas, loadImage } = require('canvas');
+const path = require('path');
+const fs = require('fs');
 const router = express.Router();
+
+const outputDir = path.join(__dirname, 'generated_images');
+
+// Asegúrate de que el directorio para imágenes generadas exista
+if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir);
+}
 
 router.get('/welcomecard', async (req, res) => {
     const { background, avatar, name, welcomeText, memberCount } = req.query;
@@ -40,10 +49,15 @@ router.get('/welcomecard', async (req, res) => {
             ctx.fillText(`Member ${decodeURIComponent(memberCount)}`, canvas.width / 2, 130);
         }
 
-        // Convertir el canvas a imagen
+        // Guardar la imagen en el directorio
+        const timestamp = Date.now();
+        const filePath = path.join(outputDir, `welcomecard_${timestamp}.png`);
         const buffer = canvas.toBuffer('image/png');
-        res.setHeader('Content-Type', 'image/png');
-        res.send(buffer);
+        fs.writeFileSync(filePath, buffer);
+
+        // Devolver la URL de la imagen generada
+        const imageUrl = `https://api.aiko.top/generated_images/welcomecard_${timestamp}.png`;
+        res.json({ imageUrl });
 
     } catch (error) {
         console.error('Error al generar la tarjeta de bienvenida:', error);

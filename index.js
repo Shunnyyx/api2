@@ -12,44 +12,47 @@ const wss = new WebSocket.Server({ server });
 
 let requestCount = 0;
 
+// Middleware para contar solicitudes
 app.use((req, res, next) => {
     requestCount++;
     next();
 });
 
+// Importar y usar routers para cat y dog
 app.use('/api/cat', require('./api/cat'));
 app.use('/api/dog', require('./api/dog'));
 
+// Endpoint de estadísticas
 app.get('/api/stats', (req, res) => {
     const stats = {
-        endpointsCount: 6, // Cambia esto según corresponda
-        userCount: 450, // Cambia esto según corresponda
+        endpointsCount: 6, // Actualiza esto según el número real de endpoints
+        userCount: 450, // Actualiza esto según el número real de usuarios
         requestCount: requestCount,
-        uptime: '99.9%' // Cambia esto según corresponda
+        uptime: '99.9%' // Actualiza esto según el uptime real
     };
 
     res.json(stats);
 });
 
-// Manejar conexiones WebSocket
+// Manejo de conexiones WebSocket
 wss.on('connection', ws => {
-    console.log('New WebSocket connection');
+    console.log('Nueva conexión WebSocket');
 
     // Enviar estadísticas al cliente conectado
     ws.send(JSON.stringify({
-        endpointsCount: 6,
-        userCount: 450,
+        endpointsCount: 6, // Actualiza según el número real de endpoints
+        userCount: 450, // Actualiza según el número real de usuarios
         requestCount: requestCount,
-        uptime: '99.9%'
+        uptime: '99.9%' // Actualiza según el uptime real
     }));
 
     // Enviar estadísticas periódicamente
     const interval = setInterval(() => {
         ws.send(JSON.stringify({
-            endpointsCount: 6,
-            userCount: 450,
+            endpointsCount: 6, // Actualiza según el número real de endpoints
+            userCount: 450, // Actualiza según el número real de usuarios
             requestCount: requestCount,
-            uptime: '99.9%'
+            uptime: '99.9%' // Actualiza según el uptime real
         }));
     }, 30000); // Cada 30 segundos
 
@@ -58,6 +61,7 @@ wss.on('connection', ws => {
     });
 });
 
+// Iniciar servidor
 server.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Servidor en ejecución en el puerto ${port}`);
 });
