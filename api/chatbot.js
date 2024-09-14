@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const app = express();
+const router = express.Router(); // Usa Router para modularidad
 
 const chatbotDataPath = path.join(__dirname, '..', 'app', 'chatbot.json');
 let chatbotData;
@@ -16,12 +16,12 @@ fs.readFile(chatbotDataPath, 'utf-8', (err, data) => {
 });
 
 // Middleware para manejar JSON
-app.use(express.json());
+router.use(express.json());
 
 // Middleware para filtrar contenido inapropiado
 function filterText(text) {
     if (!chatbotData || !chatbotData.badWords) return text;
-    
+
     let filteredText = text;
     chatbotData.badWords.forEach(word => {
         const regex = new RegExp(`\\b${word}\\b`, 'gi');
@@ -31,7 +31,7 @@ function filterText(text) {
 }
 
 // Endpoint del chatbot
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     try {
         const message = req.query.message;
         const language = req.query.language || 'en'; // Usa inglés por defecto
@@ -58,4 +58,4 @@ app.get('/', (req, res) => {
     }
 });
 
-module.exports = app;
+module.exports = router;
