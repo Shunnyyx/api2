@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-require('dotenv').config(); // Para manejar las variables de entorno
 
-const API_KEY = process.env.OPENWEATHERMAP_API_KEY; // Tu clave API de OpenWeatherMap
+// API Key de OpenWeatherMap desde las variables de entorno
+const API_KEY = process.env.OPENWEATHERMAP_API_KEY;
 
 // Endpoint para obtener el clima
 router.get('/weather', async (req, res) => {
