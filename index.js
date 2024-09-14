@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.json()); // Para manejar JSON en el cuerpo de la solicitud
 
@@ -26,7 +27,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Algo salió mal!');
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
+// Iniciar el servidor
+app.listen(port, () => {
+  console.log(`Servidor escuchando en el puerto ${port}`);
 });
