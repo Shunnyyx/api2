@@ -1,47 +1,29 @@
 const express = require('express');
-const { NlpManager } = require('node-nlp');
+const path = require('path');
+const fs = require('fs');
 const app = express();
 
-// Crear una instancia del NLP Manager
-const manager = new NlpManager({ languages: ['en', 'es'], nlu: { log: false } });
+const chatbotDataPath = path.join(__dirname, '..', 'app', 'chatbot.json');
+let chatbotData;
 
-// Entrenamiento del bot
-(async () => {
-    try {
-        // Entrenamiento en inglés
-        manager.addDocument('en', 'Hi', 'greeting');
-        manager.addDocument('en', 'Hello', 'greeting');
-        manager.addDocument('en', 'How are you?', 'greeting');
-        manager.addDocument('en', 'Tell me a joke', 'joke');
-
-        // Entrenamiento en español
-        manager.addDocument('es', 'Hola', 'greeting');
-        manager.addDocument('es', '¿Cómo estás?', 'greeting');
-        manager.addDocument('es', 'Cuéntame un chiste', 'joke');
-
-        // Respuestas para el bot
-        manager.addAnswer('en', 'greeting', 'Hello! I am 9INE, developed by Aiko™. How can I assist you today?');
-        manager.addAnswer('en', 'joke', 'Why did the scarecrow win an award? Because he was outstanding in his field!');
-
-        manager.addAnswer('es', 'greeting', '¡Hola! Soy 9INE, desarrollado por Aiko™. ¿Cómo puedo asistirte hoy?');
-        manager.addAnswer('es', 'joke', '¿Por qué el espantapájaros ganó un premio? Porque era sobresaliente en su campo.');
-
-        await manager.train();
-        manager.save();
-        console.log('Bot training complete');
-    } catch (error) {
-        console.error('Error during bot training:', error);
+// Leer el archivo JSON al iniciar la aplicación
+fs.readFile(chatbotDataPath, 'utf-8', (err, data) => {
+    if (err) {
+        console.error('Error al leer el archivo JSON del chatbot:', err);
+        process.exit(1); // Salir si hay un error al leer el archivo
     }
-})();
+    chatbotData = JSON.parse(data);
+});
 
+// Middleware para manejar JSON
 app.use(express.json());
 
 // Middleware para filtrar contenido inapropiado
-const badWords = ['badword1', 'badword2']; // Añade las palabras que quieres filtrar
-
 function filterText(text) {
+    if (!chatbotData || !chatbotData.badWords) return text;
+    
     let filteredText = text;
-    badWords.forEach(word => {
+    chatbotData.badWords.forEach(word => {
         const regex = new RegExp(`\\b${word}\\b`, 'gi');
         filteredText = filteredText.replace(regex, '[censored]');
     });
@@ -49,9 +31,11 @@ function filterText(text) {
 }
 
 // Endpoint del chatbot
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
     try {
         const message = req.query.message;
+        const language = req.query.language || 'en'; // Usa inglés por defecto
+
         if (!message) {
             return res.status(400).json({ error: 'No message provided' });
         }
@@ -60,11 +44,13 @@ app.get('/', async (req, res) => {
         const filteredMessage = filterText(message);
 
         // Obtener respuesta del bot
-        const response = await manager.process(filteredMessage);
+        const response = chatbotData.responses[language] || {};
+        const botResponse = response[filteredMessage] || 'I\'m sorry, I don\'t understand that request.';
 
         // Filtrar respuesta del bot
-        const filteredResponse = filterText(response.answer);
+        const filteredResponse = filterText(botResponse);
 
+        // Enviar respuesta en formato JSON
         res.json({ response: filteredResponse });
     } catch (error) {
         console.error('Error en el endpoint del chatbot:', error);
