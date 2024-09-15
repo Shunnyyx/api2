@@ -1,12 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const { Configuration, OpenAI } = require('openai');
+const { Configuration, OpenAIClient } = require('openai');
 
 // Cargar la API Key de OpenAI desde las variables de entorno
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAI(configuration);
+const openaiClient = new OpenAIClient(configuration);
 
 // Ruta al archivo JSON de respuestas del chatbot
 const chatbotDataPath = path.join(__dirname, '../data/chatbot.json');
@@ -39,7 +39,7 @@ module.exports = async (req, res) => {
 
       // Usar OpenAI para generar una respuesta
       try {
-        const completion = await openai.createCompletion({
+        const completion = await openaiClient.completions.create({
           model: 'text-davinci-003',
           prompt: userMessage,
           max_tokens: 150,
