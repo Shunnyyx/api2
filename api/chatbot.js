@@ -1,10 +1,13 @@
+const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const app = express();
+const port = process.env.PORT || 3000;
 
 // Path to the chatbot JSON file
-const chatbotJsonPath = path.join(__dirname, '../data/chatbot.json');
+const chatbotJsonPath = path.join(__dirname, 'data/chatbot.json');
 
-// Load the chatbot data from the JSON file
+// Load chatbot data
 const loadChatbotData = () => {
   try {
     const data = fs.readFileSync(chatbotJsonPath, 'utf-8');
@@ -15,24 +18,31 @@ const loadChatbotData = () => {
   }
 };
 
-// Function to handle messages
-const handleMessage = (message) => {
+// Endpoint to get chatbot response
+app.get('/api/chatbot', (req, res) => {
+  const message = req.query.message; // Get message from query parameter
   const chatbotData = loadChatbotData();
+
   if (!chatbotData) {
-    return 'There was an issue loading the chatbot information.';
+    return res.status(500).json({ error: 'Error loading chatbot data' });
   }
 
   const responses = chatbotData.responses;
 
-  if (message.toLowerCase().includes('hello')) {
-    return responses.greeting;
-  } else if (message.toLowerCase().includes('goodbye')) {
-    return responses.farewell;
-  } else {
-    return responses.default;
-  }
-};
+  let responseMessage = responses.default;
 
-// Example usage
-const userMessage = 'Hello, how are you?'; // You can change this to test different messages
-console.log('Response:', handleMessage(userMessage));
+  if (message) {
+    if (message.toLowerCase().includes('hello')) {
+      responseMessage = responses.greeting;
+    } else if (message.toLowerCase().includes('goodbye')) {
+      responseMessage = responses.farewell;
+    }
+  }
+
+  res.json({ response: responseMessage });
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
