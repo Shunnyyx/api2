@@ -1,72 +1,62 @@
 const fs = require('fs');
 const path = require('path');
-const axios = require('axios'); // Asegúrate de instalar axios usando 'npm install axios'
+const { Configuration, OpenAIApi } = require('openai');
 
-const openaiApiKey = process.env.OPENAI_API_KEY; // Tu API key de OpenAI
-const openaiApiUrl = 'https://api.openai.com/v1/engines/davinci-codex/completions'; // URL de la API de OpenAI
+// Configura OpenAI API
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+const responsesPath = path.join(__dirname, '../data/chatbot.json');
 
 module.exports = async (req, res) => {
-  // Path to the chatbot JSON file
-  const chatbotJsonPath = path.join(__dirname, '../data/chatbot.json');
-  
-  // Read the JSON file
-  fs.readFile(chatbotJsonPath, 'utf-8', async (err, data) => {
+  const { message } = req.query;
+
+  if (!message) {
+    return res.status(400).json({ error: 'No message provided' });
+  }
+
+  // Lee el archivo JSON con las respuestas
+  fs.readFile(responsesPath, 'utf-8', async (err, data) => {
     if (err) {
-      return res.status(500).json({ error: 'Error reading the chatbot data file' });
+      return res.status(500).json({ error: 'Error reading chatbot data file' });
     }
 
     try {
-      const chatbotData = JSON.parse(data);
-      const responses = chatbotData.responses;
+      const responsesData = JSON.parse(data);
 
-      if (!responses) {
-        return res.status(404).json({ error: 'No responses found' });
-      }
+      // Detecta el idioma del mensaje del usuario
+      const detectedLanguage = detectLanguage(message); // Usa una biblioteca para detectar el idioma
+      const language = responsesData.responses[detectedLanguage] ? detectedLanguage : 'en';
+      
+      // Verifica el contenido del mensaje para devolver una respuesta adecuada
+      let responseMessage;
 
-      // Get the message and language from the query parameters
-      const message = req.query.message || '';
-      const lang = req.query.lang || 'en'; // Default to English if no language is specified
-
-      // Determine the response language
-      const languageResponses = responses[lang] || responses['en']; // Fallback to English
-
-      // Determine the response based on the message
-      let responseMessage = languageResponses.default;
-
-      // Handle specific cases
-      if (/how\s*are\s*you/i.test(message)) {
-        responseMessage = languageResponses.greeting;
-      } else if (/goodbye|bye|see you/i.test(message)) {
-        responseMessage = languageResponses.farewell;
-      } else if (/what\s*is\s*your\s*name/i.test(message)) {
-        responseMessage = 'My name is Aiko AI.';
-      } else if (/who\s*created\s*you/i.test(message)) {
-        responseMessage = 'I was created by Aiko™.';
+      if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+        responseMessage = responsesData.responses[language].greeting;
+      } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
+        responseMessage = responsesData.responses[language].farewell;
       } else {
-        // Query the OpenAI API for other cases
-        try {
-          const apiResponse = await axios.post(openaiApiUrl, {
-            prompt: message,
-            max_tokens: 150
-          }, {
-            headers: {
-              'Authorization': `Bearer ${openaiApiKey}`,
-              'Content-Type': 'application/json'
-            }
-          });
+        // Usa la API de OpenAI para generar una respuesta
+        const completion = await openai.createChatCompletion({
+          model: 'gpt-3.5-turbo',
+          messages: [{ role: 'user', content: message }],
+        });
 
-          responseMessage = apiResponse.data.choices[0].text.trim();
-        } catch (apiError) {
-          console.error('Error querying OpenAI:', apiError);
-          responseMessage = languageResponses.default;
+        responseMessage = completion.data.choices[0].message.content.trim();
+
+        // Si la respuesta generada por la IA no es adecuada, usa el mensaje predeterminado
+        if (responseMessage.toLowerCase().includes('sorry') || responseMessage.toLowerCase().includes('couldn\'t understand')) {
+          responseMessage = responsesData.responses[language].default;
         }
       }
 
-      // Respond with the determined message
+      // Envía la respuesta del chatbot
       res.json({ response: responseMessage });
 
     } catch (parseError) {
-      return res.status(500).json({ error: 'Error parsing the chatbot data file' });
+      return res.status(500).json({ error: 'Error parsing chatbot data file' });
     }
   });
 };
