@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { Configuration, OpenAIApi } = require('openai');
 
-// Configura OpenAI API
+// Configuración de OpenAI API
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'No message provided' });
   }
 
-  // Lee el archivo JSON con las respuestas
+  // Lee el archivo JSON con las respuestas predefinidas
   fs.readFile(responsesPath, 'utf-8', async (err, data) => {
     if (err) {
       return res.status(500).json({ error: 'Error reading chatbot data file' });
@@ -26,17 +26,13 @@ module.exports = async (req, res) => {
     try {
       const responsesData = JSON.parse(data);
 
-      // Detecta el idioma del mensaje del usuario
-      const detectedLanguage = detectLanguage(message); // Usa una biblioteca para detectar el idioma
-      const language = responsesData.responses[detectedLanguage] ? detectedLanguage : 'en';
-      
       // Verifica el contenido del mensaje para devolver una respuesta adecuada
       let responseMessage;
 
-      if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-        responseMessage = responsesData.responses[language].greeting;
-      } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
-        responseMessage = responsesData.responses[language].farewell;
+      if (message.toLowerCase().includes('name') || message.toLowerCase().includes('who are you')) {
+        responseMessage = "I am Aiko AI.";
+      } else if (message.toLowerCase().includes('creator') || message.toLowerCase().includes('who created you')) {
+        responseMessage = "I was created by Aiko™.";
       } else {
         // Usa la API de OpenAI para generar una respuesta
         const completion = await openai.createChatCompletion({
@@ -48,7 +44,7 @@ module.exports = async (req, res) => {
 
         // Si la respuesta generada por la IA no es adecuada, usa el mensaje predeterminado
         if (responseMessage.toLowerCase().includes('sorry') || responseMessage.toLowerCase().includes('couldn\'t understand')) {
-          responseMessage = responsesData.responses[language].default;
+          responseMessage = responsesData.responses['en'].default; // Ajusta el idioma si es necesario
         }
       }
 
