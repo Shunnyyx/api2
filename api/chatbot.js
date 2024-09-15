@@ -1,56 +1,50 @@
 const fs = require('fs');
 const path = require('path');
-const { Configuration, OpenAIApi } = require('openai');
+const { Configuration, OpenAI } = require('openai');
 
-// Configuración de OpenAI API
+// Cargar la API Key de OpenAI desde las variables de entorno
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
+const openai = new OpenAI(configuration);
 
-const responsesPath = path.join(__dirname, '../data/chatbot.json');
+// Ruta al archivo JSON de respuestas del chatbot
+const chatbotDataPath = path.join(__dirname, '../data/chatbot.json');
 
 module.exports = async (req, res) => {
-  const { message } = req.query;
-
-  if (!message) {
-    return res.status(400).json({ error: 'No message provided' });
-  }
-
-  // Lee el archivo JSON con las respuestas predefinidas
-  fs.readFile(responsesPath, 'utf-8', async (err, data) => {
+  // Lee el archivo JSON de respuestas
+  fs.readFile(chatbotDataPath, 'utf-8', async (err, data) => {
     if (err) {
       return res.status(500).json({ error: 'Error reading chatbot data file' });
     }
 
     try {
-      const responsesData = JSON.parse(data);
+      const chatbotData = JSON.parse(data);
+      const userMessage = req.body.message; // Mensaje del usuario
+      const userLang = req.body.language || 'en'; // Idioma del usuario, por defecto 'en'
 
-      // Verifica el contenido del mensaje para devolver una respuesta adecuada
-      let responseMessage;
+      // Respuestas predefinidas
+      const responses = chatbotData.responses[userLang] || chatbotData.responses['en'];
 
-      if (message.toLowerCase().includes('name') || message.toLowerCase().includes('who are you')) {
-        responseMessage = "I am Aiko AI.";
-      } else if (message.toLowerCase().includes('creator') || message.toLowerCase().includes('who created you')) {
-        responseMessage = "I was created by Aiko™.";
-      } else {
-        // Usa la API de OpenAI para generar una respuesta
-        const completion = await openai.createChatCompletion({
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: message }],
-        });
-
-        responseMessage = completion.data.choices[0].message.content.trim();
-
-        // Si la respuesta generada por la IA no es adecuada, usa el mensaje predeterminado
-        if (responseMessage.toLowerCase().includes('sorry') || responseMessage.toLowerCase().includes('couldn\'t understand')) {
-          responseMessage = responsesData.responses['en'].default; // Ajusta el idioma si es necesario
-        }
+      // Respuestas específicas
+      if (userMessage.toLowerCase().includes('who are you') || userMessage.toLowerCase().includes('what is your name')) {
+        return res.json({ response: responses.greeting });
+      }
+      if (userMessage.toLowerCase().includes('who created you') || userMessage.toLowerCase().includes('who is your creator')) {
+        return res.json({ response: 'I am created by Aiko™' });
       }
 
-      // Envía la respuesta del chatbot
-      res.json({ response: responseMessage });
-
+      // Si no se entendió el mensaje, usar OpenAI para obtener una respuesta
+      try {
+        const completion = await openai.createCompletion({
+          model: 'text-davinci-003',
+          prompt: userMessage,
+          max_tokens: 150,
+        });
+        return res.json({ response: completion.data.choices[0].text.trim() });
+      } catch (openAIError) {
+        return res.status(500).json({ error: 'Error generating response from OpenAI' });
+      }
     } catch (parseError) {
       return res.status(500).json({ error: 'Error parsing chatbot data file' });
     }
