@@ -1,0 +1,8 @@
+{
+    "responses": {
+      "greeting": "Hello! I'm Aiko AI. How can I assist you today?",
+      "farewell": "Goodbye! Have a great day.",
+      "default": "Sorry, I didn't understand your message. Could you rephrase it?"
+    }
+  }
+  
