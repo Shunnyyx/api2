@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
       // Respuestas predefinidas
       const responses = chatbotData.responses[userLang] || chatbotData.responses['en'];
 
-      // Respuestas específicas
+      // Comprobar si el mensaje es una pregunta que tiene una respuesta predefinida
       if (userMessage.toLowerCase().includes('who are you') || userMessage.toLowerCase().includes('what is your name')) {
         return res.json({ response: responses.greeting });
       }
@@ -34,14 +34,17 @@ module.exports = async (req, res) => {
         return res.json({ response: 'I am created by Aiko™' });
       }
 
-      // Si no se entendió el mensaje, usar OpenAI para obtener una respuesta
+      // Respuesta predeterminada si el mensaje no coincide con respuestas predefinidas
+      const defaultResponse = responses.default;
+
+      // Usar OpenAI para generar una respuesta
       try {
         const completion = await openai.createCompletion({
           model: 'text-davinci-003',
           prompt: userMessage,
           max_tokens: 150,
         });
-        return res.json({ response: completion.data.choices[0].text.trim() });
+        return res.json({ response: completion.data.choices[0].text.trim() || defaultResponse });
       } catch (openAIError) {
         return res.status(500).json({ error: 'Error generating response from OpenAI' });
       }
