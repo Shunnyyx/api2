@@ -1,41 +1,65 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
-
 const app = express();
-const PORT = 3000;
+const port = 3000; // Cambia el puerto si es necesario
 
-app.use(express.static('public'));
-app.use(express.json());
+// Función para verificar si una clave API es válida
+const isValidApiKey = (key) => {
+  const db1Path = path.join(__dirname, 'database', 'db1.json');
+  const db2Path = path.join(__dirname, 'database', 'db2.json');
 
-const generateApiKey = () => {
-    return crypto.randomBytes(16).toString('hex'); // Generates a random 32-character hex string
+  const validKeys = [];
+  try {
+    const db1Data = fs.readFileSync(db1Path, 'utf-8');
+    const db2Data = fs.readFileSync(db2Path, 'utf-8');
+    const db1Keys = JSON.parse(db1Data).keys;
+    const db2Keys = JSON.parse(db2Data).keys;
+
+    validKeys.push(...db1Keys, ...db2Keys);
+  } catch (err) {
+    console.error('Error al leer los archivos de claves API:', err);
+  }
+
+  return validKeys.includes(key);
 };
 
-app.post('/generate-key', (req, res) => {
-    const key = generateApiKey();
-    
-    // Example: Add the key to a specific database file
-    const dbPath = path.join(__dirname, 'database', 'db1.json');
-    
-    fs.readFile(dbPath, 'utf-8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error reading the database file' });
-        }
-        
-        const db = JSON.parse(data);
-        db.keys.push(key);
-
-        fs.writeFile(dbPath, JSON.stringify(db, null, 2), 'utf-8', (err) => {
-            if (err) {
-                return res.status(500).json({ error: 'Error writing to the database file' });
-            }
-            res.json({ key });
-        });
+// Middleware para verificar la clave API
+const verifyApiKey = (req, res, next) => {
+  const apiKey = req.headers['api-key'] || req.query['api-key']; // Leer la clave API de los encabezados o de los parámetros de la URL
+  
+  if (!apiKey || !isValidApiKey(apiKey)) {
+    return res.status(403).json({
+      error: 'Invalid API key. Get a free key at https://discord.gg/vYHWyDd4Bp'
     });
+  }
+
+  next();
+};
+
+// Endpoint para obtener imágenes de gatos
+app.get('/api/cat', verifyApiKey, (req, res) => {
+  const imagesPath = path.join(__dirname, 'images', 'cat.json');
+
+  fs.readFile(imagesPath, 'utf-8', (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error reading images file' });
+    }
+
+    const imagesData = JSON.parse(data);
+    const catImages = imagesData.cats;
+
+    if (!catImages || catImages.length === 0) {
+      return res.status(404).json({ error: 'No cat images found' });
+    }
+
+    const randomCatImage = catImages[Math.floor(Math.random() * catImages.length)];
+    res.json({ url: randomCatImage });
+  });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+// Puedes agregar más endpoints aquí, aplicando el middleware `verifyApiKey` a las rutas que necesiten protección
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });

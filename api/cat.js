@@ -11,10 +11,11 @@ const isValidApiKey = (key) => {
 
   const validKeys = [];
   try {
+    // Leer y combinar las claves de db1.json y db2.json
     const db1Data = fs.readFileSync(db1Path, 'utf-8');
     const db2Data = fs.readFileSync(db2Path, 'utf-8');
-    const db1Keys = JSON.parse(db1Data).keys;
-    const db2Keys = JSON.parse(db2Data).keys;
+    const db1Keys = JSON.parse(db1Data).keys || [];
+    const db2Keys = JSON.parse(db2Data).keys || [];
 
     validKeys.push(...db1Keys, ...db2Keys);
   } catch (err) {
@@ -26,7 +27,7 @@ const isValidApiKey = (key) => {
 
 // Middleware para verificar la clave API
 const verifyApiKey = (req, res, next) => {
-  const apiKey = req.headers['api-key'] || req.query['api-key']; // Leer la clave API de los encabezados o de los parámetros de la URL
+  const apiKey = req.headers['api-key'] || req.query['key']; // Leer la clave API de los encabezados o de los parámetros de la URL
   
   if (!apiKey || !isValidApiKey(apiKey)) {
     return res.status(403).json({
