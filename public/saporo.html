@@ -4,11 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Key Generator</title>
+    <link rel="stylesheet" href="saporo.css">
 </head>
 <body>
-    <h1>API Key Generator</h1>
-    <button id="generateKey">Generate API Key</button>
-    <p id="result"></p>
+    <div class="container">
+        <h1>API Key Generator</h1>
+        <button id="generateKey" class="btn">Generate Key</button>
+        <div class="result-container">
+            <div id="keyDisplay">Your API Key will appear here</div>
+            <button id="copyKey" class="btn" style="display: none;">
+                <span class="btn-icon">📋</span> Copy Key
+            </button>
+        </div>
+    </div>
     <script src="saporo.js"></script>
 </body>
 </html>
