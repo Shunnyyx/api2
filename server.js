@@ -25,6 +25,9 @@ const loadCatImages = () => {
     try {
       const imagesData = JSON.parse(data);
       const catImages = imagesData.cats || [];
+      if (catImages.length === 0) {
+        console.warn('El archivo JSON no contiene imágenes de gatos');
+      }
       cache.put(cacheKey, catImages, cacheDuration);
     } catch (parseErr) {
       console.error('Error al analizar el archivo de imágenes de gatos:', parseErr);
@@ -45,6 +48,12 @@ app.get('/api/cat', (req, res) => {
 
   const randomCatImage = catImages[Math.floor(Math.random() * catImages.length)];
   res.json({ url: randomCatImage });
+});
+
+// Manejo de errores global
+app.use((err, req, res, next) => {
+  console.error('Error inesperado:', err);
+  res.status(500).json({ error: 'Error inesperado en el servidor' });
 });
 
 app.listen(port, () => {
