@@ -9,24 +9,26 @@ const isValidApiKey = (key) => {
   const db1Path = path.join(__dirname, 'database', 'db1.json');
   const db2Path = path.join(__dirname, 'database', 'db2.json');
 
-  const validKeys = [];
   try {
     const db1Data = fs.readFileSync(db1Path, 'utf-8');
     const db2Data = fs.readFileSync(db2Path, 'utf-8');
-    const db1Keys = JSON.parse(db1Data).keys;
-    const db2Keys = JSON.parse(db2Data).keys;
+    const db1Keys = JSON.parse(db1Data).keys || [];
+    const db2Keys = JSON.parse(db2Data).keys || [];
 
-    validKeys.push(...db1Keys, ...db2Keys);
+    // Verificar si la clave está en alguno de los archivos
+    if (db1Keys.includes(key) || db2Keys.includes(key)) {
+      return true;
+    }
   } catch (err) {
     console.error('Error al leer los archivos de claves API:', err);
   }
 
-  return validKeys.includes(key);
+  return false;
 };
 
 // Middleware para verificar la clave API
 const verifyApiKey = (req, res, next) => {
-  const apiKey = req.headers['api-key'] || req.query['api-key']; // Leer la clave API de los encabezados o de los parámetros de la URL
+  const apiKey = req.headers['api-key'] || req.query['key']; // Leer la clave API de los encabezados o de los parámetros de la URL
   
   if (!apiKey || !isValidApiKey(apiKey)) {
     return res.status(403).json({
@@ -57,8 +59,6 @@ app.get('/api/cat', verifyApiKey, (req, res) => {
     res.json({ url: randomCatImage });
   });
 });
-
-// Puedes agregar más endpoints aquí, aplicando el middleware `verifyApiKey` a las rutas que necesiten protección
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

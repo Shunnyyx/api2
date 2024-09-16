@@ -9,7 +9,6 @@ const isValidApiKey = (key) => {
   const db1Path = path.join(__dirname, 'database', 'db1.json');
   const db2Path = path.join(__dirname, 'database', 'db2.json');
 
-  const validKeys = [];
   try {
     // Leer y combinar las claves de db1.json y db2.json
     const db1Data = fs.readFileSync(db1Path, 'utf-8');
@@ -17,12 +16,12 @@ const isValidApiKey = (key) => {
     const db1Keys = JSON.parse(db1Data).keys || [];
     const db2Keys = JSON.parse(db2Data).keys || [];
 
-    validKeys.push(...db1Keys, ...db2Keys);
+    // Verificar si la clave está en alguno de los archivos
+    return db1Keys.includes(key) || db2Keys.includes(key);
   } catch (err) {
     console.error('Error al leer los archivos de claves API:', err);
+    return false;
   }
-
-  return validKeys.includes(key);
 };
 
 // Middleware para verificar la clave API
@@ -40,7 +39,6 @@ const verifyApiKey = (req, res, next) => {
 
 // Endpoint para obtener imágenes de gatos
 app.get('/api/cat', verifyApiKey, (req, res) => {
-  // Leer el archivo JSON de imágenes de gatos
   const imagesPath = path.join(__dirname, 'images', 'cat.json');
 
   fs.readFile(imagesPath, 'utf-8', (err, data) => {
@@ -48,7 +46,13 @@ app.get('/api/cat', verifyApiKey, (req, res) => {
       return res.status(500).json({ error: 'Error reading images file' });
     }
 
-    const imagesData = JSON.parse(data);
+    let imagesData;
+    try {
+      imagesData = JSON.parse(data);
+    } catch (parseErr) {
+      return res.status(500).json({ error: 'Error parsing images file' });
+    }
+
     const catImages = imagesData.cats;
 
     if (!catImages || catImages.length === 0) {
