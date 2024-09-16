@@ -16,6 +16,9 @@ const isValidApiKey = (key) => {
     const db1Keys = JSON.parse(db1Data).keys || [];
     const db2Keys = JSON.parse(db2Data).keys || [];
 
+    console.log('DB1 Keys:', db1Keys);
+    console.log('DB2 Keys:', db2Keys);
+
     // Verificar si la clave está en alguno de los archivos
     return db1Keys.includes(key) || db2Keys.includes(key);
   } catch (err) {
@@ -28,6 +31,8 @@ const isValidApiKey = (key) => {
 const verifyApiKey = (req, res, next) => {
   const apiKey = req.headers['api-key'] || req.query['key']; // Leer la clave API de los encabezados o de los parámetros de la URL
   
+  console.log('Provided API Key:', apiKey);
+
   if (!apiKey || !isValidApiKey(apiKey)) {
     return res.status(403).json({
       error: 'Invalid API key. Get a free key at https://discord.gg/vYHWyDd4Bp'
