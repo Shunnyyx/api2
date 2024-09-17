@@ -7,71 +7,121 @@
 
     <!-- Open Graph metadata for the embed -->
     <meta property="og:title" content="Aiko API - Interesting Images and Data Endpoints" />
-    <meta property="og:description" content="Explore various endpoints to get images of cats, dogs, foxes, hugs, and more with the Aiko API." />
-    <meta property="og:image" content="https://api.aiko.top/icon.png" /> <!-- Asegúrate de que esta imagen sea pequeña -->
-    <meta property="og:image:width" content="60" /> <!-- Puedes ajustar el tamaño a algo más pequeño -->
-    <meta property="og:image:height" content="60" /> <!-- Proporción 1.91:1 -->
+    <meta property="og:description" content="Explore various endpoints to get images of cats, dogs, foxes, and more with the Aiko API." />
+    <meta property="og:image" content="https://api.aiko.top/icon.png" />
+    <meta property="og:image:width" content="60" />
+    <meta property="og:image:height" content="60" />
     <meta property="og:url" content="https://api.aiko.top" />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#1e90ff" /> <!-- Define un color para la barra superior en navegadores móviles -->
+    <meta name="theme-color" content="#1e90ff" />
 
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="icon.png" type="image/png">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="logo.png" alt="Aiko Logo" class="logo">
-            <p class="intro-message">Welcome to the Aiko API. Access various endpoints to get images and interesting data.</p>
-            <a href="https://discord.gg/vYHWyDd4Bp" class="support-btn">Support</a>
-        </header>
-        
-        <main>
-            <section class="card-grid">
-                <div class="card">
-                    <h2>🐱 Cats</h2>
-                    <p>Get adorable cat images.</p>
-                    <a href="https://api.aiko.top/api/cat" target="_blank">View Endpoint</a>
+    <header>
+        <img src="logo.png" alt="Aiko Logo" class="logo">
+        <h1>Welcome to Aiko API</h1>
+        <p class="intro-message">Discover various endpoints to get images, data, and more. Explore our API to get cute cat photos, dog images, and more interesting data.</p>
+        <a href="https://discord.gg/vYHWyDd4Bp" class="support-btn">Join Our Discord</a>
+    </header>
+
+    <main>
+        <section class="card-grid">
+            <div class="card">
+                <h2>🐱 Cats</h2>
+                <p>Get adorable cat images with a single request.</p>
+                <a href="https://api.aiko.top/api/cat" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🐶 Dogs</h2>
+                <p>Fetch cute dog images to brighten your day.</p>
+                <a href="https://api.aiko.top/api/dog" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🐦 Birds</h2>
+                <p>Discover vibrant bird images from around the world.</p>
+                <a href="https://api.aiko.top/api/bird" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🦊 Foxes</h2>
+                <p>Get images of clever foxes in various settings.</p>
+                <a href="https://api.aiko.top/api/fox" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🐼 Pandas</h2>
+                <p>Enjoy adorable panda images to make you smile.</p>
+                <a href="https://api.aiko.top/api/panda" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🤗 Hugs</h2>
+                <p>Receive heartwarming anime hug gifs.</p>
+                <a href="https://api.aiko.top/api/hug" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>💋 Kisses</h2>
+                <p>Find sweet anime kiss gifs to share with friends.</p>
+                <a href="https://api.aiko.top/api/kiss" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🔍 Search Anime</h2>
+                <p>Search for information about your favorite anime.</p>
+                <a href="https://api.aiko.top/api/anime?search=naruto" target="_blank">View Endpoint</a>
+            </div>
+            <div class="card">
+                <h2>🌦️ Weather</h2>
+                <p>Get current weather information for any location.</p>
+                <a href="https://api.aiko.top/api/weather?location=Tokyo" target="_blank">View Endpoint</a>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <h3>API Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <h4>Endpoints Available</h4>
+                    <p>10</p>
                 </div>
-                <div class="card">
-                    <h2>🐶 Dogs</h2>
-                    <p>Get cute dog images.</p>
-                    <a href="https://api.aiko.top/api/dog" target="_blank">View Endpoint</a>
+                <div class="stat-box">
+                    <h4>Images Served</h4>
+                    <p>200+</p>
                 </div>
-                <div class="card">
-                    <h2>🐦 Birds</h2>
-                    <p>Get colorful bird images.</p>
-                    <a href="https://api.aiko.top/api/bird" target="_blank">View Endpoint</a>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h3>Highlighted Features</h3>
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h4>High-Quality Images</h4>
+                    <p>Our API delivers high-resolution images for all your needs.</p>
                 </div>
-                <div class="card">
-                    <h2>🦊 Foxes</h2>
-                    <p>Get clever fox images.</p>
-                    <a href="https://api.aiko.top/api/fox" target="_blank">View Endpoint</a>
+                <div class="feature-box">
+                    <h4>Fast Response Time</h4>
+                    <p>Get quick responses with optimized endpoint performance.</p>
                 </div>
-                <div class="card">
-                    <h2>🤗 Hugs</h2>
-                    <p>Get anime hug gifs.</p>
-                    <a href="https://api.aiko.top/api/hug" target="_blank">View Endpoint</a>
+                <div class="feature-box">
+                    <h4>Easy Integration</h4>
+                    <p>Simple and straightforward API endpoints for easy integration.</p>
                 </div>
-                <div class="card">
-                    <h2>💋 Kisses</h2>
-                    <p>Get anime kiss gifs.</p>
-                    <a href="https://api.aiko.top/api/kiss" target="_blank">View Endpoint</a>
+                <div class="feature-box">
+                    <h4>Support & Documentation</h4>
+                    <p>Comprehensive documentation and responsive support team.</p>
                 </div>
-                <div class="card">
-                    <h2>🔍 Search Anime</h2>
-                    <p>Search for information about your favorite anime.</p>
-                    <a href="https://api.aiko.top/api/anime?search=naruto" target="_blank">View Endpoint</a>
-                </div>
-                <div class="card">
-                    <h2>🌦️ Weather</h2>
-                    <p>Get weather information for a specific location.</p>
-                    <a href="https://api.aiko.top/api/weather?location=Tokyo" target="_blank">View Endpoint</a>
-                </div>
-        
-        <footer>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
             <p>✨ Powered by <span class="highlight">aiko.top</span></p>
-        </footer>
-    </div>
+            <p>&copy; 2024 Aiko API. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="https://api.aiko.top/terms" target="_blank">Terms of Service</a></li>
+                <li><a href="https://api.aiko.top/privacy" target="_blank">Privacy Policy</a></li>
+                <li><a href="mailto:support@aiko.top">Contact Us</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

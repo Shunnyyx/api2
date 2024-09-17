@@ -10,90 +10,108 @@ body {
     background: linear-gradient(135deg, #0d1a27, #09121b); /* Fondo azul oscuro degradado */
     color: #fff;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background: rgba(20, 20, 20, 0.8); /* Fondo semi-transparente para el header */
     padding: 20px;
-}
-
-.container {
-    width: 100%;
-    max-width: 1000px;
     text-align: center;
+    border-bottom: 2px solid #1e90ff; /* Línea inferior de color azul */
 }
 
-/* Logo */
 .logo {
-    max-width: 200px;
-    margin-bottom: 30px;
+    max-width: 150px;
+    margin-bottom: 10px;
 }
 
-/* Introducción y Botón de Soporte */
-.intro-message {
-    font-size: 1.4rem;
+h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
     color: #ffffff;
-    margin-bottom: 20px; /* Separación del mensaje */
+}
+
+.intro-message {
+    font-size: 1.1rem;
+    color: #dcdde1;
+    margin-bottom: 20px;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .support-btn {
-    background-color: #ff4757;
-    color: white;
+    background-color: #1e90ff;
+    color: #fff;
     padding: 12px 25px;
-    font-size: 1.1rem;
-    border-radius: 30px;
+    font-size: 1rem;
+    border-radius: 25px;
     text-decoration: none;
     transition: background 0.3s ease, transform 0.3s ease;
-    margin-bottom: 50px; /* Separación con los endpoints */
-    display: inline-block;
+    margin-bottom: 30px;
 }
 
 .support-btn:hover {
-    background-color: #e84142;
+    background-color: #1c7ee0;
     transform: scale(1.05);
 }
 
-/* Sección de Endpoints */
+/* Card Grid */
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-top: 50px; /* Separación con el botón de soporte */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 30px;
 }
 
+/* Card */
 .card {
     background: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 25px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px);
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
 }
 
 .card h2 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
     color: #ffffff;
 }
 
 .card p {
-    font-size: 1.1rem;
-    margin-bottom: 20px;
-    color: #dcdde1;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #b0b0b0;
 }
 
 .card a {
     display: inline-block;
-    padding: 12px 25px;
+    padding: 10px 20px;
     color: #fff;
     background: #1e90ff;
-    border-radius: 30px;
+    border-radius: 25px;
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
@@ -102,15 +120,17 @@ body {
     transform: scale(1.05);
 }
 
-/* Sección de Estadísticas */
+/* Stats Section */
 .stats-section {
-    margin-top: 60px; /* Mayor espacio antes de las estadísticas */
+    margin-top: 40px;
     padding: 30px;
-    background-color: rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     text-align: center;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .stats-section h3 {
@@ -125,61 +145,128 @@ body {
     gap: 20px;
 }
 
+/* Stat Box */
 .stat-box {
-    padding: 15px 20px;
+    padding: 20px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .stat-box h4 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-bottom: 10px;
     color: #ffffff;
 }
 
 .stat-box p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #66d9ff;
 }
 
+/* Features Section */
+.features-section {
+    margin-top: 40px;
+    padding: 30px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.features-section h3 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+/* Feature Box */
+.feature-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.feature-box h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.feature-box p {
+    font-size: 1rem;
+    color: #b0b0b0;
+}
+
 /* Footer */
 footer {
-    margin-top: 50px;
-    font-size: 1rem;
+    background: rgba(20, 20, 20, 0.8);
+    padding: 20px;
+    border-top: 2px solid #1e90ff; /* Línea superior de color azul */
+    text-align: center;
 }
 
-.highlight {
-    color: #ff9ff3;
+.footer-content {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-/* Estilo para la barra de desplazamiento en navegadores WebKit */
+.footer-content p {
+    margin: 10px 0;
+    color: #dcdde1;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.footer-links li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.footer-links a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* Scrollbar Styles */
 ::-webkit-scrollbar {
-    width: 12px; /* Ancho de la barra de desplazamiento */
+    width: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #0d1a27; /* Color del fondo del track */
-    border-radius: 10px; /* Bordes redondeados del track */
+    background: #0d1a27;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #1e90ff; /* Color de la barra */
-    border-radius: 10px; /* Bordes redondeados de la barra */
-    border: 3px solid #0d1a27; /* Borde alrededor de la barra */
+    background: #1e90ff;
+    border-radius: 10px;
+    border: 3px solid #0d1a27;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #1c7ee0; /* Color de la barra al pasar el mouse */
+    background: #1c7ee0;
 }
 
-/* Estilo para la barra de desplazamiento en Firefox */
-scrollbar-width: thin; /* Reduce el tamaño de la barra */
-scrollbar-color: #1e90ff #0d1a27; /* Color de la barra (primero) y del fondo (segundo) */
-
-/* Estilo adicional para mejorar compatibilidad en otros navegadores */
 html {
-    scrollbar-width: thin; /* Reduce el tamaño de la barra en Firefox */
-    scrollbar-color: #1e90ff #0d1a27; /* Colores personalizados para la barra en Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #1e90ff #0d1a27;
 }
