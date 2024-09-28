@@ -6,10 +6,8 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "src": "/404", "dest": "/public/404.html" },
-    { "src": "/(.*)", "dest": "/public/$1" } 
-  ],
-  "rewrites": [
-    { "src": "/(.*)", "dest": "/public/404.html" }
+    { "src": "/404", "dest": "/public/404.html" }, 
+    { "src": "/(.*)", "dest": "/public/$1" },
+    { "src": "/.*", "status": 404, "dest": "/public/404.html" }
   ]
 }
