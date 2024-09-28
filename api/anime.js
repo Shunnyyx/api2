@@ -1,53 +1,42 @@
+// api/anime.js
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const app = express();
-const port = 3000;
 
-// Servir archivos estáticos
-app.use('/static', express.static(path.join(__dirname, 'static')));
+const router = express.Router(); // Crear una instancia del router
 
-// Endpoint para obtener información de un anime
-app.get('/api/anime', (req, res) => {
-    const { search } = req.query; // Cambiado de 'name' a 'search'
+// Ruta correcta para acceder a 'anime.json'
+const animeDataPath = path.join(__dirname, '../app/anime.json'); // Asegúrate de que la ruta sea correcta
+
+// Endpoint para obtener información del anime
+router.get('/', (req, res) => {
+    const { search } = req.query;
 
     if (!search) {
-        return res.status(400).json({ error: 'Falta el parámetro de búsqueda del anime.' });
+        return res.status(400).json({ error: 'Missing anime search parameter.' });
     }
 
-    // Leer el archivo JSON de animes
-    const filePath = path.join(__dirname, '../app', 'anime.json');
-    console.log('Ruta del archivo:', filePath); // Imprime la ruta para verificar
-
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs.readFile(animeDataPath, 'utf8', (err, data) => { // Cambiar a animeDataPath aquí
         if (err) {
-            console.error('Error al leer el archivo:', err.message); // Imprime el mensaje de error
-            return res.status(500).json({ error: 'Error al leer el archivo de datos.' });
+            console.error('Error reading the data file:', err.message); // Mensaje de error detallado
+            return res.status(500).json({ error: 'Error reading the data file.' });
         }
 
         let animeData;
         try {
             animeData = JSON.parse(data);
         } catch (parseErr) {
-            console.error('Error al parsear el JSON:', parseErr.message); // Imprime el mensaje de error
-            return res.status(500).json({ error: 'Error al procesar los datos.' });
+            console.error('Error processing the data:', parseErr.message); // Mensaje de error detallado
+            return res.status(500).json({ error: 'Error processing the data.' });
         }
 
         const anime = animeData.find(a => a.title.toLowerCase() === search.toLowerCase());
-
         if (!anime) {
-            return res.status(404).json({ error: 'Anime no encontrado.' });
+            return res.status(404).json({ error: 'Anime not found.' });
         }
 
-        res.json(anime);
+        res.json(anime); // Responder con el anime encontrado en formato JSON
     });
 });
 
-// Servir el archivo HTML
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../anime.html'));
-});
-
-app.listen(port, () => {
-    console.log(`Servidor escuchando en http://localhost:${port}`);
-});
+module.exports = router; // Exportar el router

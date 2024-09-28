@@ -18,6 +18,14 @@ const cacheDuration = 60000; // 1 minuto
 app.use(compression());
 app.use(express.json()); // Para manejar JSON en el cuerpo de la solicitud
 
+// Servir archivos estáticos desde la carpeta 'public'
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Servir la página principal (index.html) en la raíz
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Función para cargar imágenes de gatos en memoria
 const loadCatImages = () => {
   fs.readFile(imagesPath, 'utf-8', (err, data) => {
@@ -81,7 +89,7 @@ app.use('/api', apiRouter);
 
 // Middleware de manejo de errores para 404
 app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, 'public', '404.html')); // Asegúrate de que 404.html esté en la carpeta 'public'
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
 // Middleware de manejo de errores
