@@ -2,7 +2,7 @@ const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const path = require('path');
 
 // Ruta de la imagen "wanted" en el directorio api/images
-const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
+const wantedImagePath = path.join(__dirname, 'assets', 'wanted.png');
 
 // Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {

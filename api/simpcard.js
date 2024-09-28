@@ -2,7 +2,7 @@ const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 
 // Ruta de la imagen "simpcard" en el directorio 'public'
-const simpcardImagePath = path.join(__dirname, 'images', 'simpcard.png');
+const simpcardImagePath = path.join(__dirname, 'assets', 'simpcard.png');
 
 // Función para crear la imagen "simpcard" con el avatar
 const createSimpcardImage = async (avatarUrl) => {
