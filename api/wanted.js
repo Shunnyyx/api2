@@ -19,7 +19,7 @@ const createWantedImage = async (avatarUrl) => {
         const avatar = await loadImage(avatarUrl);
 
         // Cambiar el tamaño del avatar a 280x280
-        const avatarSize = 280;
+        const avatarSize = 290;
         ctx.drawImage(avatar, (canvas.width / 2) - (avatarSize / 2), canvas.height - 460, avatarSize, avatarSize);
 
         // Obtener el buffer de la imagen resultante

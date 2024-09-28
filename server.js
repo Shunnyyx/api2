@@ -1,11 +1,13 @@
+// Importar las dependencias necesarias
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const compression = require('compression');
 const cache = require('memory-cache');
 
+// Inicializar la aplicación Express
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2000;
 
 // Rutas de imágenes de gatos
 const imagesPath = path.join(__dirname, 'images', 'cat.json');
@@ -55,22 +57,32 @@ app.get('/api/cat', (req, res) => {
 // Ruta base para los endpoints dinámicos
 const apiRouter = express.Router();
 
-// Lee todos los archivos en la carpeta '/api'
+// Lee todos los archivos en la carpeta '/api' y los carga como rutas
 fs.readdirSync(path.join(__dirname, 'api')).forEach(file => {
   if (file.endsWith('.js')) {
     const route = require(`./api/${file}`);
     const routeName = `/${path.basename(file, '.js')}`;
-    apiRouter.use(routeName, route);
+
+    // Verificar si el archivo exporta un router o un handler válido
+    if (typeof route === 'function') {
+      apiRouter.use(routeName, route); // Usar si es una función
+    } else if (typeof route === 'object' && typeof route.handler === 'function') {
+      apiRouter.use(routeName, route.handler); // Usar si es un objeto con un 'handler'
+    } else if (route instanceof express.Router) {
+      apiRouter.use(routeName, route); // Usar si es un router
+    } else {
+      console.error(`Error al cargar la ruta ${routeName}: no es una función ni un router válido.`);
+    }
   }
 });
 
-// Usa el enrutador de la API
+// Usar el apiRouter para manejar todas las rutas dentro de '/api'
 app.use('/api', apiRouter);
 
-// Manejo de errores global
+// Middleware de manejo de errores
 app.use((err, req, res, next) => {
-  console.error('Error inesperado:', err);
-  res.status(500).json({ error: 'Error inesperado en el servidor' });
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 // Iniciar el servidor
