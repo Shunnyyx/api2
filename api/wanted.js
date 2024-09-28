@@ -1,4 +1,4 @@
-const Jimp = require('jimp');
+const { createCanvas, loadImage } = require('canvas');
 const path = require('path');
 
 // Ruta de la imagen "wanted" en el directorio api/images
@@ -7,29 +7,26 @@ const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
 // Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {
     try {
-        // Descargar la imagen del avatar desde la URL
-        const avatar = await Jimp.read(avatarUrl);
-        console.log('Avatar downloaded successfully from:', avatarUrl);
-
         // Cargar la imagen de fondo "wanted"
-        const wantedImage = await Jimp.read(wantedImagePath);
-        console.log('Wanted image loaded successfully from:', wantedImagePath);
+        const wantedImage = await loadImage(wantedImagePath);
+        const canvas = createCanvas(wantedImage.width, wantedImage.height);
+        const ctx = canvas.getContext('2d');
 
+        // Dibujar la imagen de fondo
+        ctx.drawImage(wantedImage, 0, 0);
+
+        // Cargar el avatar desde la URL
+        const avatar = await loadImage(avatarUrl);
+        
         // Cambiar el tamaño del avatar a 280x280
-        avatar.resize(280, 280);
+        const avatarSize = 280;
+        ctx.drawImage(avatar, (canvas.width / 2) - (avatarSize / 2), canvas.height - 460, avatarSize, avatarSize);
 
-        // Posicionar el avatar en el centro hacia abajo en la imagen "wanted"
-        const avatarX = (wantedImage.bitmap.width / 2) - 140;
-        const avatarY = wantedImage.bitmap.height - 460;
-
-        // Combinar las dos imágenes (wanted + avatar)
-        wantedImage.composite(avatar, avatarX, avatarY);
-
-        // Convertir la imagen resultante a un buffer en formato PNG y devolverla
-        const buffer = await wantedImage.getBufferAsync(Jimp.MIME_PNG);
+        // Obtener el buffer de la imagen resultante
+        const buffer = canvas.toBuffer('image/png');
         return buffer;
     } catch (error) {
-        console.error('Error details:', error); // Log más detallado
+        console.error('Error details:', error);
         throw new Error('Error generating the wanted image: ' + error.message);
     }
 };
