@@ -8,6 +8,7 @@
     "build": "echo 'No build step required' && exit 0"
   },
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.56",
     "axios": "^1.7.5",
     "canvas": "^2.11.2",
     "compression": "^1.7.4",
