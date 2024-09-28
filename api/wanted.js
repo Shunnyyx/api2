@@ -1,47 +1,34 @@
-const { createCanvas, loadImage } = require('canvas');
-const axios = require('axios');
+const Jimp = require('jimp');
 const path = require('path');
 
-// Ruta de la imagen "wanted"
-const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
+// Ruta de la imagen "wanted" (en la carpeta public para acceso desde serverless)
+const wantedImagePath = path.join(process.cwd(), 'public', 'images', 'wanted.png');
 
 // Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {
     try {
         // Descargar la imagen del avatar
-        const response = await axios({
-            url: avatarUrl,
-            responseType: 'arraybuffer',
-        });
-        const avatarBuffer = Buffer.from(response.data, 'binary');
+        const avatar = await Jimp.read(avatarUrl);
+        const wantedImage = await Jimp.read(wantedImagePath);
 
-        // Cargar las imágenes (wanted y avatar)
-        const wantedImage = await loadImage(wantedImagePath);
-        const avatarImage = await loadImage(avatarBuffer);
+        // Cambiar el tamaño del avatar a 280x280
+        avatar.resize(280, 280);
 
-        // Crear el canvas con el tamaño de la imagen "wanted"
-        const canvas = createCanvas(wantedImage.width, wantedImage.height);
-        const ctx = canvas.getContext('2d');
+        // Posicionar el avatar en el centro hacia abajo en la imagen "wanted"
+        const avatarX = (wantedImage.bitmap.width / 2) - 140;
+        const avatarY = wantedImage.bitmap.height - 460;
 
-        // Dibujar la imagen "wanted" en el canvas
-        ctx.drawImage(wantedImage, 0, 0);
+        // Combinar las dos imágenes
+        wantedImage.composite(avatar, avatarX, avatarY);
 
-        // Definir la posición y tamaño del avatar sobre la imagen "wanted"
-        const avatarSize = 280; // Aumentamos un poco el tamaño del avatar
-        const avatarX = (canvas.width / 2) - (avatarSize / 2); // Centrar el avatar horizontalmente
-        const avatarY = canvas.height - avatarSize - 180; // Mover el avatar más abajo en la imagen
-
-        // Dibujar el avatar sobre la imagen "wanted"
-        ctx.drawImage(avatarImage, avatarX, avatarY, avatarSize, avatarSize);
-
-        // Devolver el buffer de la imagen generada
-        return canvas.toBuffer();
+        // Convertir a buffer PNG y devolverlo
+        const buffer = await wantedImage.getBufferAsync(Jimp.MIME_PNG);
+        return buffer;
     } catch (error) {
         throw new Error('Error generating the wanted image');
     }
 };
 
-// Exportar la función como un middleware de Express
 module.exports = async (req, res) => {
     const avatarUrl = req.query.avatar;
 
