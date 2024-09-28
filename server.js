@@ -93,13 +93,12 @@ app.use((err, req, res, next) => {
   res.status(500).send('Algo salió mal!');
 });
 
+// Middleware de manejo de errores para 404
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
+});
+
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
-});
-
-// Middleware de manejo de errores para 404
-app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, '../public/404.html'));
-
 });
