@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="404.css">
+    <link rel="icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+
+    <div id="not-found-message">
+        <h1>404</h1>
+        <p>Sorry, but the page <strong id="current-url"></strong> does not exist.</p>
+
+        <div class="suggestions">
+            <p>Maybe you meant:</p>
+            <ul>
+                <li><a href="/">Go to the home page</a></li>
+                <li><a href="https://docs.aiko.top">Visit the API documentation</a></li>
+                <li><a href="https://discord.gg/vYHWyDd4Bp">Contact us</a></li>
+            </ul>
+        </div>
+
+        <p>Or try searching for what you need:</p>
+        <form id="searchForm">
+            <input type="text" id="searchInput" name="q" placeholder="Search...">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Container where the error message will be shown -->
+        <p id="error-message" style="color: rgb(167, 167, 167); display: none;"></p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // 404 PAGE IMPROVEMENTS: Redirection based on keywords
+            const currentUrl = window.location.pathname.toLowerCase(); // Get the current URL
+            const suggestions = [
+                { keyword: 'simpcard', url: '/api/simpcard' },
+                { keyword: 'wanted', url: '/api/wanted' }
+            ];
+
+            // Search for a match in the URL and suggestions
+            const match = suggestions.find(suggestion => currentUrl.includes(suggestion.keyword));
+
+            if (match) {
+                // Redirect if there's a keyword match
+                window.location.href = match.url;
+            } else {
+                // Display suggestions and search functionality if no match is found
+                const notFoundMessage = document.querySelector('#not-found-message');
+                if (notFoundMessage) {
+                    document.getElementById('current-url').innerText = currentUrl;
+                }
+            }
+
+            // SEARCH FUNCTIONALITY
+            const searchForm = document.getElementById('searchForm');
+            const errorMessage = document.getElementById('error-message');
+
+            if (searchForm) {
+                searchForm.addEventListener('submit', function (event) {
+                    event.preventDefault(); // Prevent form's default behavior
+
+                    const query = document.getElementById('searchInput').value.toLowerCase();
+                    const endpoints = {
+                        'cat': '/api/cat',
+                        'dog': '/api/dog',
+                        'bird': '/api/bird',
+                        'fox': '/api/fox',
+                        'panda': '/api/panda',
+                        'weather': '/api/weather',
+                        'hug': '/api/hug',
+                        'kiss': '/api/kiss',
+                        'anime': '/api/anime?search=naruto',
+                        'simpcard': '/api/simpcard?avatar=https://api.aiko.top/public/pfp.jpg',
+                        'wanted': '/api/wanted?avatar=https://api.aiko.top/public/pfp.jpg'
+                    };
+
+                    if (endpoints[query]) {
+                        // Redirect to the corresponding endpoint if it exists
+                        window.location.href = endpoints[query];
+                    } else {
+                        // Show error message below the search input if no match is found
+                        errorMessage.innerText = 'No results found for "' + query + '". Please try a different search term.';
+                        errorMessage.style.display = 'block'; // Make the error message visible
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
