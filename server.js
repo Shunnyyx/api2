@@ -79,10 +79,15 @@ fs.readdirSync(path.join(__dirname, 'api')).forEach(file => {
 // Usar el apiRouter para manejar todas las rutas dentro de '/api'
 app.use('/api', apiRouter);
 
+// Middleware de manejo de errores para 404
+app.use((req, res, next) => {
+  res.status(404).sendFile(path.join(__dirname, 'public', '404.html')); // Asegúrate de que 404.html esté en la carpeta 'public'
+});
+
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send('Algo salió mal!');
 });
 
 // Iniciar el servidor
