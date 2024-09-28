@@ -1,7 +1,7 @@
 const Jimp = require('jimp');
 const path = require('path');
 
-// Ruta de la imagen "wanted" en el directorio public
+// Ruta de la imagen "wanted.png" en el directorio api/images
 const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
 
 // Función para crear la imagen "wanted" con el avatar
