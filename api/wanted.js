@@ -1,10 +1,3 @@
-const Jimp = require('jimp');
-const path = require('path');
-
-// Ruta de la imagen "wanted.png" en el directorio api/images
-const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
-
-// Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {
     try {
         // Descargar la imagen del avatar desde la URL
@@ -25,23 +18,7 @@ const createWantedImage = async (avatarUrl) => {
         const buffer = await wantedImage.getBufferAsync(Jimp.MIME_PNG);
         return buffer;
     } catch (error) {
+        console.error('Detailed error:', error); // Agrega esta línea
         throw new Error('Error generating the wanted image');
-    }
-};
-
-module.exports = async (req, res) => {
-    const avatarUrl = req.query.avatar;
-
-    if (!avatarUrl) {
-        return res.status(400).send('Error: Please provide an avatar URL using the ?avatar parameter.');
-    }
-
-    try {
-        const imageBuffer = await createWantedImage(avatarUrl);
-        res.setHeader('Content-Type', 'image/png');
-        res.send(imageBuffer);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error: Unable to generate the wanted image.');
     }
 };
