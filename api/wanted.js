@@ -1,15 +1,19 @@
 const Jimp = require('jimp');
 const path = require('path');
 
-// Ruta de la imagen "wanted" en el directorio public
-const wantedImagePath = path.join(process.cwd(), 'public', 'images', 'wanted.png');
+// Ruta de la imagen "wanted" en el directorio api/images
+const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
 
 // Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {
     try {
         // Descargar la imagen del avatar desde la URL
         const avatar = await Jimp.read(avatarUrl);
+        console.log('Avatar downloaded successfully from:', avatarUrl);
+
+        // Cargar la imagen de fondo "wanted"
         const wantedImage = await Jimp.read(wantedImagePath);
+        console.log('Wanted image loaded successfully from:', wantedImagePath);
 
         // Cambiar el tamaño del avatar a 280x280
         avatar.resize(280, 280);
@@ -30,16 +34,23 @@ const createWantedImage = async (avatarUrl) => {
     }
 };
 
+// Endpoint para manejar la solicitud y generar la imagen "wanted"
 module.exports = async (req, res) => {
     const avatarUrl = req.query.avatar;
 
+    // Verificar que se haya proporcionado una URL de avatar
     if (!avatarUrl) {
         return res.status(400).send('Error: Please provide an avatar URL using the ?avatar parameter.');
     }
 
     try {
+        // Crear la imagen "wanted" con el avatar proporcionado
         const imageBuffer = await createWantedImage(avatarUrl);
+
+        // Establecer el encabezado de tipo de contenido para PNG
         res.setHeader('Content-Type', 'image/png');
+
+        // Enviar la imagen generada como respuesta
         res.send(imageBuffer);
     } catch (error) {
         console.error(error);
