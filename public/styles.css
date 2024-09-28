@@ -207,8 +207,39 @@ footer a:hover {
     color: #ffffff; /* White color on hover */
 }
 
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
 
+body {
+    background-color: #1e2124;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
 
+h1 {
+    font-size: 6rem; /* Larger font size for 404 */
+    color: #7E60BF; /* Pastel color for the error code */
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #b9bbbe;
+    margin-bottom: 20px;
+}
+
+strong {
+    color: #ffffff; /* Highlight the path in white */
+}
 
 .suggestions {
     margin-top: 20px;
@@ -271,19 +302,3 @@ form button:hover {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Animations for 404 page */
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-h1 {
-    animation: float 3s infinite ease-in-out;
-}
