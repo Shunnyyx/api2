@@ -1,7 +1,7 @@
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage } = require('@napi-rs/canvas');
 const path = require('path');
 
-// Ruta de la imagen "simpcard" en el directorio 'public'
+// Ruta de la imagen "simpcard" en el directorio 'assets'
 const simpcardImagePath = path.join(__dirname, 'assets', 'simpcard.png');
 
 // Función para crear la imagen "simpcard" con el avatar
@@ -28,7 +28,7 @@ const createSimpcardImage = async (avatarUrl) => {
         ctx.drawImage(avatar, avatarX, avatarY, avatarWidth, avatarHeight);
 
         // Devolver la imagen resultante como buffer PNG
-        return canvas.toBuffer();
+        return canvas.toBuffer('image/png');
     } catch (error) {
         console.error('Error al generar la imagen simpcard:', error);
         throw new Error('Error generating the simpcard image: ' + error.message);
