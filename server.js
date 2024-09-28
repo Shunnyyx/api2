@@ -3,17 +3,18 @@ const fs = require('fs');
 const path = require('path');
 const compression = require('compression');
 const cache = require('memory-cache');
-const wantedRoute = require('./api/wanted'); // Importamos el nuevo endpoint
 
 const app = express();
-const port = 3000; // Cambia el puerto si es necesario
+const port = process.env.PORT || 3000;
 
+// Rutas de imágenes de gatos
 const imagesPath = path.join(__dirname, 'images', 'cat.json');
 const cacheKey = 'catImages';
 const cacheDuration = 60000; // 1 minuto
 
 // Middleware para comprimir las respuestas
 app.use(compression());
+app.use(express.json()); // Para manejar JSON en el cuerpo de la solicitud
 
 // Función para cargar imágenes de gatos en memoria
 const loadCatImages = () => {
@@ -36,7 +37,7 @@ const loadCatImages = () => {
   });
 };
 
-// Cargar imágenes al iniciar el servidor
+// Cargar imágenes de gatos al iniciar el servidor
 loadCatImages();
 
 // Endpoint para obtener imágenes de gatos
@@ -51,8 +52,20 @@ app.get('/api/cat', (req, res) => {
   res.json({ url: randomCatImage });
 });
 
-// Nuevo endpoint para "wanted"
-app.get('/api/wanted', wantedRoute);
+// Ruta base para los endpoints dinámicos
+const apiRouter = express.Router();
+
+// Lee todos los archivos en la carpeta '/api'
+fs.readdirSync(path.join(__dirname, 'api')).forEach(file => {
+  if (file.endsWith('.js')) {
+    const route = require(`./api/${file}`);
+    const routeName = `/${path.basename(file, '.js')}`;
+    apiRouter.use(routeName, route);
+  }
+});
+
+// Usa el enrutador de la API
+app.use('/api', apiRouter);
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
@@ -60,6 +73,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Error inesperado en el servidor' });
 });
 
+// Iniciar el servidor
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
