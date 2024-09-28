@@ -15,9 +15,9 @@ const createWantedImage = async (avatarUrl) => {
         // Dibujar la imagen de fondo
         ctx.drawImage(wantedImage, 0, 0);
 
-        // Cargar el avatar desde la URL
+        // Cargar el avatar desde la URL proporcionada
         const avatar = await loadImage(avatarUrl);
-        
+
         // Cambiar el tamaño del avatar a 280x280
         const avatarSize = 280;
         ctx.drawImage(avatar, (canvas.width / 2) - (avatarSize / 2), canvas.height - 460, avatarSize, avatarSize);
