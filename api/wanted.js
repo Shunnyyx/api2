@@ -2,7 +2,7 @@ const Jimp = require('jimp');
 const path = require('path');
 
 // Ruta de la imagen "wanted" en el directorio public
-const wantedImagePath = path.join(process.cwd(), 'public', 'images', 'wanted.png');
+const wantedImagePath = path.join(__dirname, 'images', 'wanted.png');
 
 // Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {
