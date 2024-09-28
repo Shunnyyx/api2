@@ -6,8 +6,8 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "handle": "filesystem" }, 
-    { "src": "/404", "dest": "/public/404.html", "status": 404 },
+    { "handle": "filesystem" },
+    { "src": "/404", "dest": "/public/404.html" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ]
 }
