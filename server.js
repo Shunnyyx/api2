@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const compression = require('compression');
 const cache = require('memory-cache');
+const wantedRoute = require('./api/wanted'); // Importamos el nuevo endpoint
 
 const app = express();
 const port = 3000; // Cambia el puerto si es necesario
@@ -49,6 +50,9 @@ app.get('/api/cat', (req, res) => {
   const randomCatImage = catImages[Math.floor(Math.random() * catImages.length)];
   res.json({ url: randomCatImage });
 });
+
+// Nuevo endpoint para "wanted"
+app.get('/api/wanted', wantedRoute);
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
