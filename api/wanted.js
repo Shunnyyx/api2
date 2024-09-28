@@ -1,13 +1,13 @@
 const Jimp = require('jimp');
 const path = require('path');
 
-// Ruta de la imagen "wanted" (en la carpeta public para acceso desde serverless)
+// Ruta de la imagen "wanted" en el directorio public
 const wantedImagePath = path.join(process.cwd(), 'public', 'images', 'wanted.png');
 
 // Función para crear la imagen "wanted" con el avatar
 const createWantedImage = async (avatarUrl) => {
     try {
-        // Descargar la imagen del avatar
+        // Descargar la imagen del avatar desde la URL
         const avatar = await Jimp.read(avatarUrl);
         const wantedImage = await Jimp.read(wantedImagePath);
 
@@ -18,10 +18,10 @@ const createWantedImage = async (avatarUrl) => {
         const avatarX = (wantedImage.bitmap.width / 2) - 140;
         const avatarY = wantedImage.bitmap.height - 460;
 
-        // Combinar las dos imágenes
+        // Combinar las dos imágenes (wanted + avatar)
         wantedImage.composite(avatar, avatarX, avatarY);
 
-        // Convertir a buffer PNG y devolverlo
+        // Convertir la imagen resultante a un buffer en formato PNG y devolverla
         const buffer = await wantedImage.getBufferAsync(Jimp.MIME_PNG);
         return buffer;
     } catch (error) {
